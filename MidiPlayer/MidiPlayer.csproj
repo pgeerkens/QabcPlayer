@@ -72,8 +72,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Midi-dot-net.README.txt" />
     <Content Include="Midi.png" />
-    <Content Include="README.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

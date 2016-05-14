@@ -126,11 +126,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="README.txt" />
     <Content Include="Readme\CUDA.NET.Readme.txt" />
     <Content Include="Readme\CUDAfy-License.txt" />
     <Content Include="Readme\example_source_code.cs.txt" />
     <Content Include="Readme\ILSpy-license.txt" />
+    <Content Include="Readme\Midi-dot-net.README.txt" />
     <Content Include="Readme\README.txt" />
     <Content Include="Tools\cudafycl.exe" />
     <Content Include="Tools\CudafyViewer.exe" />
