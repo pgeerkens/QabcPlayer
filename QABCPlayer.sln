@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayWaveLib", "PlayWaveLib\PlayWaveLib.csproj", "{242FD227-730C-4DCD-A626-A3DFE0934E09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Highlighter", "Highlighter\Highlighter.csproj", "{A1FCD5E5-7224-45FF-99DE-9A3FDE0C87BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicWpf", "MusicWpf\MusicWpf.csproj", "{A1394059-CE22-410B-9CE4-27D33A1FE6F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScoreDisplay", "ScoreDisplay\ScoreDisplay.csproj", "{13E70B45-9595-4C27-B56A-D99A702E0A21}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SoutionItems", "SoutionItems", "{E61BB6B1-3EFF-4E80-8C2A-778A5EF3F9E6}"
+	ProjectSection(SolutionItems) = preProject
+		Cudafy.dll = Cudafy.dll
+		Cudafy.Host.dll = Cudafy.Host.dll
+		Cudafy.Translator.dll = Cudafy.Translator.dll
+		Irony.dll = Irony.dll
+		Irony.pdb = Irony.pdb
+		QABCParser.dll = QABCParser.dll
+		QABCParser.pdb = QABCParser.pdb
+		QABCParser.xml = QABCParser.xml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QabcPlayer", "QabcPlayer\QabcPlayer.csproj", "{E5C00BDA-4BA7-4A94-A54B-DDDEC9B1AED9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{242FD227-730C-4DCD-A626-A3DFE0934E09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{242FD227-730C-4DCD-A626-A3DFE0934E09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{242FD227-730C-4DCD-A626-A3DFE0934E09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{242FD227-730C-4DCD-A626-A3DFE0934E09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1FCD5E5-7224-45FF-99DE-9A3FDE0C87BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1FCD5E5-7224-45FF-99DE-9A3FDE0C87BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1FCD5E5-7224-45FF-99DE-9A3FDE0C87BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1FCD5E5-7224-45FF-99DE-9A3FDE0C87BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1394059-CE22-410B-9CE4-27D33A1FE6F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1394059-CE22-410B-9CE4-27D33A1FE6F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13E70B45-9595-4C27-B56A-D99A702E0A21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13E70B45-9595-4C27-B56A-D99A702E0A21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13E70B45-9595-4C27-B56A-D99A702E0A21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13E70B45-9595-4C27-B56A-D99A702E0A21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5C00BDA-4BA7-4A94-A54B-DDDEC9B1AED9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5C00BDA-4BA7-4A94-A54B-DDDEC9B1AED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5C00BDA-4BA7-4A94-A54B-DDDEC9B1AED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5C00BDA-4BA7-4A94-A54B-DDDEC9B1AED9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

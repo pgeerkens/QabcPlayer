@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="QABC_CombineHarvester" xml:space="preserve">
+    <value>MFT120L16CO&lt;P16BAGP16FP16EP16GEP16DCP16EP16GP16ECDP16CP8P16O&gt;C
+</value>
+  </data>
+  <data name="QABC_Doe_a_deer" xml:space="preserve">
+    <value>T180 L4 O4
+C.D8E.C8 | ECE2 | D.E8F8F8E8D8 | F1 |
+E.F8G.E8 | GEG2 | F.G8A8A8G8F8 | A2..P8 |
+G.C8D8E8F8G8 | A1 | A.D8E8F#8G8A8 | B1 |
+B.E8F#8G#8A8B8 | &gt;C2.C8&lt;B8 | AFBG | &gt;C&lt;GED | C2.P4 |]
+</value>
+  </data>
+  <data name="QABC_Ecuador" xml:space="preserve">
+    <value>MFT150L16
+AP8EP8&gt;C&lt;P  | BP&gt;D&lt;PBPGP | AP8EP8&gt;C&lt;P  | BP&gt;D&lt;PBPGP  |
+&gt;CP8&lt;GP8&gt;EP | DPEPDP&lt;GP  | &gt;CP8&lt;AP8&gt;CP | &lt;BP&gt;CP&lt;BPGP |]
+</value>
+  </data>
+  <data name="QABC_FuneralMarch" xml:space="preserve">
+    <value>MN T100 L8 O1
+A4 A. A16 | A4 &gt;C. &lt;B16 | B. A16 A. A16 | A2 |
+&gt;C4 C. C16 | C4 E.  D16 | D. C16 C. C16 | C2 |]
+</value>
+  </data>
+  <data name="QABC_GodSaveTheQueen" xml:space="preserve">
+    <value>MF T60 L8 O3 
+CCD&lt;B&gt; P16 C16D | EEFE P16 D16C | DC &lt;B&gt; C4 P8 |
+CCD&lt;B&gt; P16 C16D | EEFE P16 D16C | DC &lt;B&gt; C4 P8 |]
+</value>
+  </data>
+  <data name="QABC_JingleBells" xml:space="preserve">
+    <value>t200l4o4mn
+eee2 | eee2 | egc.d8 | e1 | fff.f8 | fee2 | e8e8edd | ed2g. p8 |
+eee2 | eee2 | egc.d8 | e1 | fff.f8 | fee2 | e8f8ggf | dc1
+</value>
+  </data>
+  <data name="QABC_Macarena" xml:space="preserve">
+    <value>MN T180 O2 L8
+C4CCC4CC | CCCCCE&lt;GG&gt; | C4CCC4CC | CCCC&lt;A4G4&gt; |
+C4CCC4CC | CCCCE4G4   | G2EPGE   | P4C2P4 |]
+</value>
+  </data>
+  <data name="QABC_Popcorn" xml:space="preserve">
+    <value>MF T120 L16 O4
+C&lt;A#&gt;C&lt;G | D#GC P | &gt;C&lt;A#&gt;C&lt;G | D#GC P |
+&gt;CDD#D   | D#CDC  | D&lt;A#&gt;C&lt;A# | &gt;C&lt;G#&gt;C P4 |]
+</value>
+  </data>
+  <data name="QABC_TakeMeOutToTheBallGame" xml:space="preserve">
+    <value>mn t200 l4 o3
+C pc | AG E | ml G2. | D2D | mn C pc | AG E | ml G2. |
+mn AG+A | E FG | A2 F | ml D2D | mn A2A | A Bc | dB A | GED |
+C pc | AG E | ml G2. | mn D2D | C2D | EFG | ml A2. | 
+p mn AB | c. | p. | c. | p. | cBA | GF+G | ml A2. | B2. | c2. |]</value>
+  </data>
+  <data name="QABC_TheLionSleepsTonight" xml:space="preserve">
+    <value>T160 L4 
+MS F G A8 G A8 | B- A G8 F G8 | MS A G F A  MS G1 |  
+MS F G A8 G A8 | B- A G8 F G8 | MS A G F A  MS F1 |] 
+</value>
+  </data>
+  <data name="QABC_Unknown" xml:space="preserve">
+    <value>T150 L8 MN O3
+B&gt;C4MLD2. &lt;B&gt;C&lt;B&gt;E2. PCDE2..EEDCE2. E4G4 ED2.. P8
+&lt;G4B&gt;C&lt;B4 A1. P2 
+B&gt;DD4D&lt;B&gt;DmlE D2P2 mn
+EGGE GEMLAG EDD2MNDE 
+MLBAGED4&lt;BA G2MNGAG4 ML&gt;DC&lt;B2. P1
+P1
+
+T150 L16 ML O2
+e4 degb &gt;egb&gt;e gb2 b2. g8..f+32f+8p8&gt;d8.&lt;b b4.p8p4
+&lt;&lt;f+4 e+f+ab &gt;d+f+b&gt;e+ f+b2 b2. a8..g32g8 &gt;c8.&lt; b16b4.p8p4
+&lt;g4.
+</value>
+  </data>
+  <data name="QABC_WillTell" xml:space="preserve">
+    <value>mf l16 t155
+o3mnB4p8msBBmnB4p8msBBB8G#8
+E8G#8B8G#8B8&gt;E8o&lt;B8G#8E8G#8
+B8G#8B8 o&gt; E8 &lt; mnB4p8msBBmnB4
+p8msBBmnB4p8msBBmnB4p8msBB
+B8BBB8B8B8BBB8B8B8BB
+B8B8B8BBB8B8B2..p8p4p4
+p8mso1BBB8BBB8BBo2E8F#8G#8o1BB
+B8BBo2E8G#G#F#8D#8o1B8BBB8BB
+B8BBo2E8F#8G#8EG#mlB4BmsAG#F#
+E8G#8E8o3BBB8BBB8BBo4E8F#8
+G#8o3BBB8BBo4E8G#G#F#8D#8o3B8BB
+B8BBB8BBo4E8F#8G#8mlEG#B4
+BAG#F#msE8G#8E8o3G#G#G#8G#G#G#8G#G#
+G#8o4C#8o3G#8o4C#8o3G#8o4C#8o3G#8F#8E8D#8
+C#8G#G#G#8G#G#G#8G#G#G#8o4C#8o3G#8o4C#8
+o3G#8o4C#8o3B8A#8B8A#8B8G#G#G#8G#G#
+G#8G#G#G#8o4C#8o3G#8o4C#8o3G#8o4C#8o3G#8F#8
+E8D#8C#8G#G#G#8G#G#G#8G#G#G#8o4C#8
+o3G#8o4C#8o3G#8o4C#8o3B8A#8B8o2BBB8F#F#
+F#8F#F#F#8G#8A8F#4mnA8msG#8mnE4
+msG#8F#8F#8F#8o3F#F#F#8F#F#F#8G#8
+A8mnF#4msA8G#8mnE4msG#8F#8o2BB
+B8o1BBB8BBB8BBo2mnE8F#8G#8o1BB
+B8BBo2E8G#G#F#8D#8o1B8BBB8BB
+B8BBo2E8F#8G#8EG#mlB4mnBAG#F#
+E8G#8E8o3BBB8BBB8BBo4E8F#8
+G#8o3BBB8BBo4E8G#G#F#8D#8o3B8BB
+B8BBB8BBo4E8F#8G#8mlEG#mlB4
+mnBAG#F#mnE8G#8E8o3mlE56F56G56A56B56o4C56D56mnE8EEE8E8mlG#4G#8
+mnF#8E8D#8E8C#8mso3Bo4C#o3Bo4C#o3B
+o4C#D#Eo3ABABABo4C#D#o3G#AG#AG#ABo4C#o3F#
+G#F#G#F#G#F#G#F#G#F#D#o2Bo3mlBo4C#D#E8D#8E8
+C#8o3msBo4C#o3Bo4C#o3Bo4C#D#Eo3ABABABo4C#D#o3G#
+AG#AG#ABo4C#o3F#G#F#G#F#AF#EmnE8p8mlC#4
+mnC#o2Cmso3C#o2Co3D#C#o2BAAG#EC#C#C#C#C#E
+D#o1CG#G#G#G#G#G#o2C#EG#o3C#C#C#C#C#o2Co3C#o2Co3D#
+C#o2BAAG#EC#C#C#C#C#ED#o1CG#G#G#G#G#mnG#
+o2C#EG#o3msC#ED#C#D#o2CG#G#G#o3G#EC#D#o2CG#G#G#
+o3G#EC#D#o2BG#G#A#GD#D#G#GG#GG#AG#F#E
+o1BA#Bo2Eo1Bo2F#o1Bo2G#ED#EG#EAF#Bo3G#F#ED#
+F#EC#o2Bo3C#o2Bo3C#D#EF#G#o2ABABo3C#D#EF#o2G#
+AG#ACo3C#D#Eo2F#G#F#G#F#G#F#G#F#G#F#D#o1B
+Co2C#D#Eo1BA#Bo2Eo1Bo2F#o1Bo2G#ED#EG#EAF#B
+o3G#F#ED#F#EC#o2Bo3C#o2Bo3C#D#EF#G#o2ABABo3C#
+D#EF#o2G#AG#ABo3C#D#Eo2F#o3C#o2Co3C#D#C#o2AF#mnE
+o3mlEF#G#ABo4C#D#mnE8msEEE8E8mlG#4G#8
+msF#8msE8D#8E8C#8o3Bo4C#o3Bo4C#o3Bo4C#D#Eo3A
+BABABo4C#D#o3G#AG#AG#ABo4C#o3F#G#F#G#F#
+G#F#G#F#G#F#D#o2Bo3mlBo4C#D#mnE8EEE8E8mlG#4G#8
+msF#8E8D#8E8C#8o3Bo4C#o3Bo4C#o3B
+o4C#D#Eo3ABABABo4C#D#o3G#AG#AG#ABo4C#o3F#
+G#F#G#F#AG#F#E8o2B8o3E8G#G#G#8mnG#G#G#8
+G#G#G#8o4C#8o3G#8o4C#8o3G#8o4C#8o3G#8F#8E8
+D#8C#8G#G#G#8G#G#G#8G#G#G#8o4C#8o3G#8
+o4C#8o3G#8o4C#8o3B8A#8B8A#8B8G#G#G#8
+G#G#G#8G#G#G#8o4C#8o3G#8o4C#8o3G#8o4C#8o3G#8
+F#8E8D#8C#8G#G#G#8G#G#G#8G#G#G#8
+o4C#8o3G#8o4C#8o3G#8o4C#8o3B8A#8B8A#8B8
+o2F#F#F#8F#F#F#8G#8A8F#4A8G#8
+E4G#8F#8o0B8o1B8o2F#F#F#8F#F#F#8
+G#8A8F#4A8G#8E4G#8F#8
+BBB8o1BBB8BBB8BBo2E8F#8G#8
+o1BBB8BBo2E8G#G#F#8D#8o1B8BBB8
+BBB8BBo2E8F#8G#8EG#mlB4mnB
+AG#F#E8o1B8o2E8o3BBB8BBB8BBo4E8
+F#8G#8o3BBB8BBo4E8G#G#F#8D#8o3B8
+BBB8BBB8BBo4E8F#8G#8o3EG#mlB4
+mnBAG#F#mlEF#G#mnAmlG#ABo4mnC#mlo3Bo4C#D#mnEmlD#
+EF#mnG#Ao3Bo4Ao3Bo4Ao3Bo4Ao3Bo4Ao3Bo4Ao3Bo4Ao3Bo4Ao3BmlE
+F#G#mnAmlG#ABmno4C#mlo3Bo4C#D#mnEmlD#EF#mnG#Ao3Bo4Ao3Bo4A
+o3Bo4Ao3Bo4Ao3Bo4Ao3Bo4Ao3Bo4Ao3Bp16
+mlG#o4G#o3mnG#p16mlD#o4D#o3mnD#p16
+mlEo4Eo3mnEp16mlAo4Ao3mnAp16mlG#o4G#o3
+mnG#p16mlD#o4D#o3mnD#p16mlEo4Eo3mnEp16
+mlAo4Ao3mnAo4Go3Go4Go3Go4Go3Go4Go3Go4msG8E8C8E8o4mnG#
+o3G#o4G#o3G#o4G#o3G#o4G#o3G#o4msG#8E8o3B8o4E8mnG#o3G#o4G#o3G#o4G#
+o3G#o4G#o3G#o4msG#8F8C#8F8mnA#o3A#o4A#o3A#o4A#o3A#o4A#o3A#o4msA#8
+G8E8G8B8p16mnA#p16Ap16G#p16F#p16Ep16
+D#p16C#p16o3Bp16A#p16Ap16G#p16F#p16Ep16D#p16F#mlE
+F#G#mnAmlG#ABmno4C#o3mlBo4C#D#mnEmlD#EF#mnG#Ao3Bo4Ao3Bo4A
+o3Bo4Ao3Bo4Ao3Bo4Ao3Bo4Ao3Bo4Ao3BmlEF#G#mnAmlG#ABmno4C#o3mlB
+o4C#D#mnEmlD#EF#mnG#Ao3Bo4Ao3Bo4Ao3Bo4Ao3Bo4Ao3Bo4Ao3Bo4A
+o3Bo4Ao3Bp16mlG#o4G#o3mnG#p16mlD#o4D#o3
+mnD#p16mlEo4Eo3mnEp16mlAo4Ao3mnAp16
+mlG#o4G#o3mnG#p16mlD#o4D#o3mnD#p16mlEo4Eo3
+mnEp16mlAo4Ao3mnAo4Go3Go4Go3Go4G
+o3Go4Go3Go4G8E8C8E8G#o3G#o4G#o3G#o4G#o3G#o4G#o3G#o4G#8
+E8o3B8o4E8G#o3G#o4G#o3G#o4G#o3G#o4G#o3G#o4msG#8mnF8C#8
+F8A#o3A#o4A#o3A#o4A#o3A#o4A#o3A#o4A#8G8E8G8B8
+p16A#p16Ap16G#p16F#p16Ep16D#p16C#p16o3Bp16A#p16
+Ap16G#p16F#p16Ep16D#p16FmlED#ED#mnE8BBB8
+BBB8BBo4E8F#8G#8o3BBB8BBB8
+BBo4G#8A8B8p8E8F#8G#8p8o3G#8
+A8B8p8p2o2BCo3C#DD#
+EFF#GG#AA#BCo4C#D#ED#F#D#ED#F#D#E
+D#F#D#ED#F#D#ED#F#D#ED#F#D#ED#F#D#E
+D#F#D#E8Eo3Eo4Eo3Eo4Eo3Eo4E8o3Bo2Bo3Bo2Bo3Bo2Bo3B8
+G#o2G#o3G#o2G#o3G#o2G#o3G8Eo2Eo3Eo2Eo3Eo2Eo3E8EEE8
+E8E8o2BBB8B8B8G#G#G#8G#8G#8
+EEE8E8E8o1B8o2E8o1B8o2G#8E8B8
+G#8o3E8o2B8o3E8o2B8o3G#8E8B8G#8o4E4
+p8EEE8E8E8E8E4p8p16
+EE4p8p16o2EE2</value>
+    <comment>Finale of William Tell Overture</comment>
+  </data>
+  <data name="QABC_YankeeDoodle" xml:space="preserve">
+    <value>MN T255 L4 O2
+GGAB  | GBAD | GGAB | G2F+2  | GGAB  | &gt;C&lt;BAG | F+DEF+| G2GP |
+EF+ED | EF+G2| DEDC | &lt;B2&gt;D2 | EF+ED | EF+GE | DGF+A | G2GP1 |
+
+MN T255 L4 O3
+GGAB  | GBAD  | GGAB | G2F+2  | GGAB  | &gt;C&lt;BAG | F+DEF+ | G2GP |
+EF+ED | EF+G2 | DEDC | &lt;B2&gt;D2 | EF+ED | EF+GE  | DGF+A  | G2GP |]
+</value>
+  </data>
+</root>

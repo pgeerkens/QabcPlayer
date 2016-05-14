@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Code_Synthesizer" xml:space="preserve">
+    <value>#region Comments
+// Play with this (but keep the public signatures, of course),
+// and see how it affects the note sound; the language is C#:
+// 1) Remove even harmonics to get a more hollow sound, 
+//     or leave them in for a fuller note. 
+// 2) Reduce the SampleRate to reduce processing time.
+// 3) Play with Adsr() to change note shape.
+// 4) Adjust freqDecayConst to control harmonic signature.
+// The default values sound somewhat like the MIDI 'Tuba'.
+// ---------------------------------------------------------------
+// The methods HarmonicDecay() and Adsr() are returned as 
+// Expression trees to take advantage of JIT optimization, the 
+// same way LINQ is. The code is recompiled on every Load.
+// ---------------------------------------------------------------
+#endregion
+
+namespace DynSynthesizer
+{
+  using System;
+  using System.Linq.Expressions;
+  using PGSoftwareSolutions.Music;
+
+  public class DynSynthesizer : ISynthesizerControls {
+
+    #region Properties: SampleRate &amp; MaxDegreeeOfParallelism 
+    // A property not a field, to be part of defined interface.
+    // Maximum frequency (Hertz) = SampleRate / 2.
+    // 44100 is 'CD' quality.
+    public int SampleRate { get { return 44100; } } // per second
+
+    // Valid values are -1 (for maximum possible) and positive
+    // integers &gt;= 1, though values greater than the number of
+    // processors available will not further increase parallelism.
+    public int MaxDegreeeOfParallelism { get { return -1; } }
+    #endregion
+
+    #region Harmonic Decay
+    // Harmonic response control:
+    //---------------------------
+    public Expression&lt;Func&lt;int, double&gt;&gt; HarmonicDecay() {
+      double freqDecayConst  = 0.025;  // try 0.125 for a sharper note
+      bool withEvenHarmonics = true;   // try false for a hollower sound 
+
+      return harmonic =&gt;
+         ((harmonic % 2 == 1) || withEvenHarmonics)
+       ? Math.Exp(-freqDecayConst * (harmonic - 1))
+       : 0.0D ;
+    }
+    #endregion
+    
+    #region FrequencyResponse
+    public Expression&lt;Func&lt;double,double&gt;&gt; FrequencyResponse() {
+      
+      return frequency =&gt; 
+        (frequency &lt; 5000) ? 0.25F + frequency/ 5000 // 0.25 - 1.25
+      : (frequency &lt;10000) ? 1.75F - frequency/10000 // 1.25 - 0.75
+                           : 1.25F - frequency/20000 // 0.75 - 0.125
+                           ;
+    }
+    #endregion
+
+    #region ADSR
+    // Attack-Decay-Sustain-Release control:
+    //--------------------------------------
+    // Linear Attack from 0.0 to riseTime.
+    // Exponential Decay &amp; Sustain controlled by timeDecayConst
+    //                      from riseTime to noteDuration.
+    // Linear Release from noteDuration to noteLength.
+    //----------------------------------------------------------
+    public Expression&lt;Func&lt;double, double, double, double&gt;&gt; Adsr() {
+      const double timeDecayConst = 1.5;
+      const double riseTime       = 0.015;
+
+      return (noteDuration, noteLength, noteTime) =&gt; (
+        Math.Exp(-timeDecayConst * noteTime) *
+          ( (noteTime &lt; riseTime)     ? noteTime / riseTime 
+          : (noteTime &gt; noteDuration) ? (noteTime     - noteLength)
+                                      / (noteDuration - noteLength)
+                                      :  1
+          )
+      );
+    }
+    #endregion
+  }
+}</value>
+  </data>
+</root>
