@@ -6,16 +6,20 @@
 using System;
 using System.Windows.Forms;
 
-namespace QabcPlayMidi {
+namespace PGSoftwareSolutions.QabcPlayer {
 	static class Program {
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
+
+        static PlayMidiForm         Form        { get; set; }
+        static QabcPlayerViewModel  ViewModel   { get; set; }
+
+		/// <summary>The main entry point for the application.</summary>
 		[STAThread]
 		static void Main() {
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new PlayMidiForm());
+            Form        = new PlayMidiForm();
+            ViewModel   = new QabcPlayerViewModel(Form);
+			Application.Run(Form);
 		}
 	}
 }

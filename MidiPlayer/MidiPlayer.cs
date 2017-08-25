@@ -11,7 +11,6 @@ using System.Linq;
 using Midi;
 
 using PGSoftwareSolutions.Qabc;
-using PGSoftwareSolutions.Util;
 
 namespace PGSoftwareSolutions.Music {
     using NextNoteEvent      = EventHandler<NextNoteEventArgs>;
@@ -33,7 +32,7 @@ namespace PGSoftwareSolutions.Music {
             new MidiPlayer(instrument.Instrument, device, channel);
 
         /// <summary>MIDI Instruments.</summary>
-        public static IList<IInstrumentGenus> Instruments { get { return _instruments; } }
+        public static IReadOnlyList<IInstrumentGenus> Instruments { get { return _instruments; } }
 
         /// <summary>TODO</summary>
         public OutputDevice Device    { get { return _device; } } readonly OutputDevice _device;
@@ -123,12 +122,11 @@ namespace PGSoftwareSolutions.Music {
                 OnPlayCompleted(new PlayCompletedEventArgs(true, ex));
             }
         }
-        private void OnPlayCompleted(PlayCompletedEventArgs e) =>
-            PlayCompleted.RaiseEvent(this, e);
+        private void OnPlayCompleted(PlayCompletedEventArgs e) => PlayCompleted?.Invoke(this, e);
 
-        private void OnNextNote(NextNoteEventArgs e) => NextNote.RaiseEvent(this, e);
+        private void OnNextNote(NextNoteEventArgs e) => NextNote?.Invoke(this, e);
 
-        IList<IInstrumentGenus> IInstrumentSettableMidiPlayer.Instruments { get { return _instruments; } }
+        IReadOnlyList<IInstrumentGenus> IInstrumentSettableMidiPlayer.Instruments { get { return _instruments; } }
 
         private Clock _clock;
 
@@ -142,7 +140,7 @@ namespace PGSoftwareSolutions.Music {
             "Synthetic Effects", "Ethnic",
             "Percussive",        "Effects"
         };
-        readonly static IList<IInstrumentGenus> _instruments = (
+        readonly static IReadOnlyList<IInstrumentGenus> _instruments = (
                 from genus in Enumerable.Range(0,InstrumentGenus.Length)
                 select new MidiGenus((short)genus, InstrumentGenus[genus])
                 as IInstrumentGenus

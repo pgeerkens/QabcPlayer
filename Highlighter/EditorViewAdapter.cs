@@ -16,36 +16,53 @@ using System.Threading;
 using Irony.Parsing;
 
 namespace Irony.GrammarExplorer {
+        /// <summary>TODO</summary>
   public delegate void ColorizeMethod();
+        /// <summary>TODO</summary>
   public interface IUIThreadInvoker {
+        /// <summary>TODO</summary>
     void InvokeOnUIThread(ColorizeMethod colorize);
   }
 
+        /// <summary>TODO</summary>
   public class ColorizeEventArgs : EventArgs {
+        /// <summary>TODO</summary>
     public readonly TokenList Tokens;
+        /// <summary>TODO</summary>
     public ColorizeEventArgs(TokenList tokens) {
       Tokens = tokens;
     }
   }
 
+    /// <summary>TODO</summary>
   //Container for two numbers representing visible range of the source text (min...max)
   // we use it to allow replacing two numbers in atomic operation
   public class ViewRange {
-    public readonly int Min, Max;
+        /// <summary>TODO</summary>
+    public readonly int Min;
+        /// <summary>TODO</summary>
+    public readonly int Max;
+        /// <summary>TODO</summary>
     public ViewRange(int min, int max) {
       Min = min;
       Max = max;
     }
-    public bool Equals(ViewRange other) {
+         /// <summary>TODO</summary>
+   public bool Equals(ViewRange other) {
       return other.Min == Min && other.Max == Max;
     }
   }
 
+        /// <summary>TODO</summary>
   public class ViewData {
     // ColoredTokens + NotColoredTokens == Source.Tokens
-    public readonly TokenList ColoredTokens = new TokenList();
+         /// <summary>TODO</summary>
+   public readonly TokenList ColoredTokens = new TokenList();
+        /// <summary>TODO</summary>
     public readonly TokenList NotColoredTokens = new TokenList(); //tokens not colored yet
+        /// <summary>TODO</summary>
     public ParseTree Tree;
+        /// <summary>TODO</summary>
     public ViewData(ParseTree tree) {
       this.Tree = tree;
       if (tree == null) return;
@@ -62,18 +79,23 @@ namespace Irony.GrammarExplorer {
   //     old viewData.ColoredTokens to newly scanned token list - initially in new-viewData.NonColoredTokens. If we find a "match",
   //     we move the token from NonColored to Colored in new viewData. This all happens on background thread.
 
+        /// <summary>TODO</summary>
   public class EditorViewAdapterList : List<EditorViewAdapter> { }
 
+        /// <summary>TODO</summary>
   public class EditorViewAdapter {
-    public EditorAdapter Adapter { get; private set; }
+         /// <summary>TODO</summary>
+   public EditorAdapter Adapter { get; private set; }
     private IUIThreadInvoker _invoker;
     //public readonly Control Control;
     ViewData _data;
     ViewRange _range;
     bool _wantsColorize;
     int _colorizing;
+        /// <summary>TODO</summary>
     public event EventHandler<ColorizeEventArgs> ColorizeTokens;
 
+        /// <summary>TODO</summary>
     public EditorViewAdapter(EditorAdapter adapter, IUIThreadInvoker invoker) {
       Adapter = adapter;
       _invoker = invoker;
@@ -81,11 +103,13 @@ namespace Irony.GrammarExplorer {
       _range = new ViewRange(-1, -1);
     }
 
-    //SetViewRange and SetNewText are called by text box's event handlers to notify adapter that user did something edit box
+         /// <summary>TODO</summary>
+   //SetViewRange and SetNewText are called by text box's event handlers to notify adapter that user did something edit box
     public void SetViewRange(int min, int max) {
       _range = new ViewRange(min, max);
       _wantsColorize = true;
     }
+        /// <summary>TODO</summary>
     //The new text is passed directly to EditorAdapter instance (possibly shared by several view adapters).
     // EditorAdapter parses the text on a separate background thread, and notifies back this and other
     // view adapters and provides them with newly parsed source through UpdateParsedSource method (see below)
@@ -98,7 +122,8 @@ namespace Irony.GrammarExplorer {
       Adapter.SetNewText(newText);
     }
 
-    //Called by EditorAdapter to provide the latest parsed source
+         /// <summary>TODO</summary>
+   //Called by EditorAdapter to provide the latest parsed source
     public void UpdateParsedSource(ParseTree newTree) {
       lock (this) {
         var oldData = _data;
@@ -113,10 +138,12 @@ namespace Irony.GrammarExplorer {
 
 
     #region Colorizing
+        /// <summary>TODO</summary>
     public bool WantsColorize {
       get { return _wantsColorize; }
     }
 
+        /// <summary>TODO</summary>
     public void TryInvokeColorize() {
       if (!_wantsColorize) return;
       int colorizing = Interlocked.Exchange(ref _colorizing, 1);
@@ -166,6 +193,7 @@ namespace Irony.GrammarExplorer {
       result = null;
       return false;
     }
+        /// <summary>TODO</summary>
     public bool TokensMatch(Token x, Token y, int shift) {
       if (x.Location.Position + shift != y.Location.Position) return false;
       if (x.Terminal != y.Terminal) return false;
@@ -174,6 +202,7 @@ namespace Irony.GrammarExplorer {
       //if (x.ValueString != y.ValueString) return false;
       return true;
     }
+        /// <summary>TODO</summary>
     public TokenList ExtractTokensInRange(TokenList tokens, int from, int until) {
       TokenList result = new TokenList();
       for (int i = tokens.Count - 1; i >= 0; i--) {
@@ -185,11 +214,13 @@ namespace Irony.GrammarExplorer {
       return result;
     }
 
+        /// <summary>TODO</summary>
     public TokenList GetTokensInRange(int from, int until) {
       ViewData data = _data;
       if (data == null) return null;
       return GetTokensInRange(data.Tree.Tokens, from, until);
     }
+        /// <summary>TODO</summary>
     public TokenList GetTokensInRange(TokenList tokens, int from, int until) {
       TokenList result = new TokenList();
       int fromIndex = LocateToken(tokens, from);
@@ -202,6 +233,7 @@ namespace Irony.GrammarExplorer {
       return result;
     }
 
+        /// <summary>TODO</summary>
     //TODO: find better place for these methods
     public int LocateToken(TokenList tokens,  int position) {
       if (tokens == null || tokens.Count == 0) return -1;

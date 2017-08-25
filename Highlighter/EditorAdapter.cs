@@ -16,6 +16,7 @@ using Irony.Parsing;
 
 namespace Irony.GrammarExplorer {
 
+    /// <summary>TODO</summary>
   public class EditorAdapter {
     Parser _parser;
     Scanner _scanner;
@@ -27,6 +28,7 @@ namespace Irony.GrammarExplorer {
     Thread _colorizerThread;
     bool _stopped;
 
+        /// <summary>TODO</summary>
     public EditorAdapter(LanguageData language) {
       _parser = new Parser(language);
       _scanner = _parser.Scanner;
@@ -35,6 +37,7 @@ namespace Irony.GrammarExplorer {
       _parserThread = new Thread(ParserLoop);
       _parserThread.IsBackground = true;
     }
+        /// <summary>TODO</summary>
     public void Activate() {
       if ((_colorizerThread.ThreadState & System.Threading.ThreadState.Running) == 0) {
         _parserThread.Start();
@@ -42,6 +45,7 @@ namespace Irony.GrammarExplorer {
       }
     }
 
+        /// <summary>TODO</summary>
     public void Stop() {
       try {
         _stopped = true;
@@ -56,11 +60,13 @@ namespace Irony.GrammarExplorer {
       }
     }
 
+        /// <summary>TODO</summary>
     public void SetNewText(string text) {
       text = text ?? string.Empty; //force it to become not null; null is special value meaning "no changes"
       _newText = text;
     }
 
+        /// <summary>TODO</summary>
     public ParseTree ParseTree {
       get { return _parseTree; }
     }
@@ -80,12 +86,14 @@ namespace Irony.GrammarExplorer {
 
 
     #region Views manipulation: AddView, RemoveView, GetViews
+        /// <summary>TODO</summary>
     public void AddView(EditorViewAdapter view) {
       lock (this) {
         _views.Add(view);
         _viewsCopy = null;
       }
     }
+        /// <summary>TODO</summary>
     public void RemoveView(EditorViewAdapter view) {
       lock (this) {
         _views.Remove(view);

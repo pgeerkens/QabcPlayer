@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace PGSoftwareSolutions.Util {
-/// <summary>
+  /// <summary>
   /// Windows Messages
   /// Defined in winuser.h from Windows SDK v6.1
   /// Documentation pulled from MSDN.
   /// </summary>
-  public enum WM : uint
-  {
+  [CLSCompliant(false)]
+  public enum WM : uint {
     /// <summary>
     /// The WM_NULL message performs no operation. An application sends the WM_NULL message if it wants to post a message that the recipient window will ignore.
     /// </summary>
@@ -449,6 +446,7 @@ namespace PGSoftwareSolutions.Util {
     /// Sent to an application when the IME changes composition status as a result of a keystroke. A window receives this message through its WindowProc function. 
     /// </summary>
     IME_COMPOSITION = 0x010F,
+    /// <summary>TODO</summary>
     IME_KEYLAST = 0x010F,
     /// <summary>
     /// The WM_INITDIALOG message is sent to the dialog box procedure immediately before a dialog box is displayed. Dialog box procedures typically use this message to initialize controls and carry out any other initialization tasks that affect the appearance of the dialog box. 
@@ -775,7 +773,9 @@ namespace PGSoftwareSolutions.Util {
     /// The WM_WTSSESSION_CHANGE message notifies applications of changes in session state.
     /// </summary>
     WTSSESSION_CHANGE = 0x02B1,
+        /// <summary>TODO</summary>
     TABLET_FIRST = 0x02c0,
+        /// <summary>TODO</summary>
     TABLET_LAST = 0x02df,
     /// <summary>
     /// An application sends a WM_CUT message to an edit control or combo box to delete (cut) the current selection, if any, in the edit control and copy the deleted text to the clipboard in CF_TEXT format. 
@@ -894,11 +894,17 @@ namespace PGSoftwareSolutions.Util {
     /// Sent to request extended title bar information. A window receives this message through its WindowProc function.
     /// </summary>
     GETTITLEBARINFOEX = 0x033F,
+        /// <summary>TODO</summary>
     HANDHELDFIRST = 0x0358,
+        /// <summary>TODO</summary>
     HANDHELDLAST = 0x035F,
+        /// <summary>TODO</summary>
     AFXFIRST = 0x0360,
+        /// <summary>TODO</summary>
     AFXLAST = 0x037F,
+        /// <summary>TODO</summary>
     PENWINFIRST = 0x0380,
+        /// <summary>TODO</summary>
     PENWINLAST = 0x038F,
     /// <summary>
     /// The WM_APP constant is used by applications to help define private messages, usually of the form WM_APP+X, where X is an integer value. 

@@ -35,6 +35,7 @@ namespace Irony.GrammarExplorer.Highlighter {
     private readonly Dictionary<TokenColor, Style> TokenStyles = new Dictionary<TokenColor, Style>();
     private readonly Style DefaultTokenStyle = new TextStyle(Brushes.Black, null, FontStyle.Regular);
     private readonly Style ErrorTokenStyle = new WavyLineStyle(240, Color.Red);
+        /// <summary>TODO</summary>
     public readonly EditorAdapter Adapter;
     private readonly EditorViewAdapter ViewAdapter;
     private readonly LanguageData Language;
@@ -94,6 +95,7 @@ namespace Irony.GrammarExplorer.Highlighter {
             this.ReleaseHandle();
         }
     }
+        /// <summary>TODO</summary>
     ~FastColoredTextBoxHighlighter() {
         Dispose(true);
         GC.SuppressFinalize(this);
@@ -225,6 +227,7 @@ namespace Irony.GrammarExplorer.Highlighter {
     #endregion
 
     #region Colorizing tokens
+        /// <summary>TODO</summary>
     public void LockTextBox() {
       // Stop redrawing:
       TextBox.BeginUpdate();
@@ -234,6 +237,7 @@ namespace Irony.GrammarExplorer.Highlighter {
       SendMessage(TextBox.Handle, EM_SETEVENTMASK, 0, IntPtr.Zero);
     }
 
+        /// <summary>TODO</summary>
     public void UnlockTextBox() {
       // turn on events
       SendMessage(TextBox.Handle, EM_SETEVENTMASK, 0, _savedEventMask);
@@ -278,6 +282,7 @@ namespace Irony.GrammarExplorer.Highlighter {
 
     #region IUIThreadInvoker Members
 
+        /// <summary>TODO</summary>
     public void InvokeOnUIThread(ColorizeMethod colorize) {
       TextBox.BeginInvoke(new MethodInvoker(colorize));
     }

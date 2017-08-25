@@ -30,9 +30,6 @@ namespace PGSoftwareSolutions.Music {
     public interface IInstrumentSettableMidiPlayer {
         /// <summary>Set the currently playing <see cref="Midi.Instrument"/> as specified</summary>
         void SetInstrument(IInstrument instrument);
-
-        /// <summary>TODO</summary>
-        IList<IInstrumentGenus> Instruments { get; }
     }
 
     /// <summary>Interface for an asynchronous player that can be paused and resumed.</summary>
@@ -40,7 +37,7 @@ namespace PGSoftwareSolutions.Music {
         /// <summary>Pause/Resume an asynchronous player.</summary>
         void PauseResume();
         /// <summary>Return the paused status of the player.</summary>
-        bool IsPaused { get; }
+        bool IsRunning { get; }
     }
     /// <summary>Interface for an asynchronous player that can be canceled.</summary>
     public interface ICancelablePlayer {

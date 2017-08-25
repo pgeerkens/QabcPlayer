@@ -24,12 +24,18 @@ using Irony.Parsing;
 
 namespace Irony.GrammarExplorer {
 
+        /// <summary>TODO</summary>
   public class TokenColorTable : Dictionary<TokenColor, Color> { }
 
+        /// <summary>TODO</summary>
   public class RichTextBoxHighlighter : NativeWindow, IDisposable, IUIThreadInvoker {
+        /// <summary>TODO</summary>
     public RichTextBox TextBox;
+        /// <summary>TODO</summary>
     public readonly TokenColorTable TokenColors = new TokenColorTable();
+        /// <summary>TODO</summary>
     public readonly EditorAdapter Adapter; 
+        /// <summary>TODO</summary>
     public readonly EditorViewAdapter ViewAdapter;
 
     private IntPtr _savedEventMask = IntPtr.Zero;
@@ -37,6 +43,7 @@ namespace Irony.GrammarExplorer {
     bool _disposed;
 
     #region constructor, initialization and disposing
+        /// <summary>TODO</summary>
     public RichTextBoxHighlighter(RichTextBox textBox, LanguageData language) {
       TextBox = textBox;
       Adapter = new EditorAdapter(language); 
@@ -71,6 +78,7 @@ namespace Irony.GrammarExplorer {
       TextBox = null;
     }
 
+        /// <summary>TODO</summary>
     public void Dispose() {
       Adapter.Stop();
       _disposed = true; 
@@ -168,7 +176,8 @@ namespace Irony.GrammarExplorer {
     #endregion
 
     #region Colorizing tokens
-    public void LockTextBox() {
+         /// <summary>TODO</summary>
+   public void LockTextBox() {
       // Stop redrawing:  
       SendMessage(TextBox.Handle, WM_SETREDRAW, 0, IntPtr.Zero );
       // Stop sending of events:  
@@ -176,6 +185,7 @@ namespace Irony.GrammarExplorer {
       //SendMessage(TextBox.Handle, EM_SETEVENTMASK, 0, IntPtr.Zero);
     }
 
+        /// <summary>TODO</summary>
     public void UnlockTextBox() {
         // turn on events  
         SendMessage(TextBox.Handle, EM_SETEVENTMASK, 0, _savedEventMask);
@@ -227,6 +237,7 @@ namespace Irony.GrammarExplorer {
 
     #region IUIThreadInvoker Members
 
+        /// <summary>TODO</summary>
     public void InvokeOnUIThread(ColorizeMethod colorize) {
       TextBox.BeginInvoke(new MethodInvoker(colorize)); 
     }

@@ -7,8 +7,6 @@
 #endregion
 using System;
 
-using PGSoftwareSolutions.Util;
-
 namespace PGSoftwareSolutions.Music {
     using NextNoteEvent = EventHandler<NextNoteEventArgs>;
     using PlayCompletedEvent = EventHandler<PlayCompletedEventArgs>;
@@ -39,10 +37,9 @@ namespace PGSoftwareSolutions.Music {
 		public virtual event NextNoteEvent NextNote;
 
         /// <inheritdoc/>
-		protected virtual void OnPlayCompleted(PlayCompletedEventArgs e) {
-			PlayCompleted.RaiseEvent(this,e);
-		}
+		protected virtual void OnPlayCompleted(PlayCompletedEventArgs e) => PlayCompleted?.Invoke(this,e);
 
+        /// <summary>TODO</summary>
 		protected ISynthesizerControls Synthesizer { get; set; }
 	}
 }

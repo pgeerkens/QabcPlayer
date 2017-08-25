@@ -10,12 +10,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PGSoftwareSolutions.Music {
+    /// <summary>TODO</summary>
 	public interface IWaveSamples {
-		int	Length		{ get; }
+        /// <summary>TODO</summary>
+		int	  Length		{ get; }
+        /// <summary>TODO</summary>
 		int   SampleRate	{ get; }
+        /// <summary>TODO</summary>
 		short this[int i] { get; }	// indexer
 	}
+        /// <summary>TODO</summary>
 	public class WaveStream : MemoryStream {
+        /// <summary>TODO</summary>
 		public WaveStream(Tune<INote> notes, ISynthesizerControls synth, Action<int> pbarDelegate)	: base() {
 			var samples = Synthesizer.Load(notes, synth, pbarDelegate);
 //			new WaveWriter(this).WriteWave(synth.SampleRate, synth.Length * 2, synth);
@@ -23,6 +29,7 @@ namespace PGSoftwareSolutions.Music {
 			Position = 0;
 		}
 
+        /// <summary>TODO</summary>
 		public StringCollection DisplayString() {
 			const Int32 bytesPerLine = 8;
 			const String sPad08 = "        ";

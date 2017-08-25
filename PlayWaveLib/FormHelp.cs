@@ -9,7 +9,9 @@ using System;
 using System.Windows.Forms;
 
 namespace PGSoftwareSolutions.Util.PlayWaveLib {
+    /// <summary>TODO</summary>
 	public partial class FormHelp : Form {
+        /// <summary>TODO</summary>
 		public FormHelp() {
 			InitializeComponent();
 		}

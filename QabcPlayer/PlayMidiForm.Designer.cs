@@ -5,7 +5,8 @@
 //                   Copyright (C) Pieter Geerkens 2012-2016
 ////////////////////////////////////////////////////////////////////////
 #endregion
-namespace QabcPlayMidi {
+
+namespace PGSoftwareSolutions.QabcPlayer {
 	partial class PlayMidiForm {
 		/// <summary> Required designer variable. </summary>
 		private System.ComponentModel.IContainer components = null;
@@ -172,7 +173,7 @@ namespace QabcPlayMidi {
             this.buttonShowWave.Text = "Show";
             this.toolTip1.SetToolTip(this.buttonShowWave, "Inspect WAVE header");
             this.buttonShowWave.UseVisualStyleBackColor = true;
-            this.buttonShowWave.Click += new System.EventHandler(this.buttonShowWave_Click);
+            this.buttonShowWave.Click += new System.EventHandler(this.ButtonShowWave_Click);
             // 
             // buttonLoad
             // 
@@ -186,7 +187,7 @@ namespace QabcPlayMidi {
             this.buttonLoad.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.toolTip1.SetToolTip(this.buttonLoad, "Load/Unload Wave music");
             this.buttonLoad.UseVisualStyleBackColor = true;
-            this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);
+            this.buttonLoad.Click += new System.EventHandler(this.ButtonLoad_Click);
             // 
             // buttonPause
             // 
@@ -204,7 +205,7 @@ namespace QabcPlayMidi {
             this.buttonPause.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.toolTip1.SetToolTip(this.buttonPause, "Pause/Resume MIDI music");
             this.buttonPause.UseVisualStyleBackColor = true;
-            this.buttonPause.Click += new System.EventHandler(this.buttonPause_CheckedChanged);
+            this.buttonPause.Click += new System.EventHandler(this.ButtonPause_CheckedChanged);
             // 
             // buttonPlay
             // 
@@ -218,7 +219,7 @@ namespace QabcPlayMidi {
             this.buttonPlay.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.toolTip1.SetToolTip(this.buttonPlay, "Play/Stop MIDI music (F5)");
             this.buttonPlay.UseVisualStyleBackColor = true;
-            this.buttonPlay.Click += new System.EventHandler(this.buttonPlay_Click);
+            this.buttonPlay.Click += new System.EventHandler(this.ButtonPlay_Click);
             // 
             // tabControl1
             // 
@@ -234,7 +235,7 @@ namespace QabcPlayMidi {
             this.tabControl1.Size = new System.Drawing.Size(618, 295);
             this.tabControl1.TabIndex = 13;
             this.toolTip1.SetToolTip(this.tabControl1, "Select a music player.");
-            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_TabIndexChanged);
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.TabControl1_TabIndexChanged);
             // 
             // tabPage1
             // 
@@ -267,7 +268,7 @@ namespace QabcPlayMidi {
         '\''};
             this.txtSynthesizer.AutoIndentCharsPatterns = "\r\n^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;]+);\r\n^\\s*(case|default)\\s*[^:]" +
     "*(?<range>:)\\s*(?<range>[^;]+);\r\n";
-            this.txtSynthesizer.AutoScrollMinSize = new System.Drawing.Size(2, 14);
+            this.txtSynthesizer.AutoScrollMinSize = new System.Drawing.Size(27, 14);
             this.txtSynthesizer.BackBrush = null;
             this.txtSynthesizer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.txtSynthesizer.BracketsHighlightStrategy = FastColoredTextBoxNS.BracketsHighlightStrategy.Strategy2;
@@ -275,6 +276,7 @@ namespace QabcPlayMidi {
             this.txtSynthesizer.CharWidth = 8;
             this.txtSynthesizer.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtSynthesizer.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.txtSynthesizer.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.txtSynthesizer.IsReplaceMode = false;
             this.txtSynthesizer.Language = FastColoredTextBoxNS.Language.CSharp;
             this.txtSynthesizer.LeftBracket = '(';
@@ -395,7 +397,7 @@ namespace QabcPlayMidi {
             this.radioButtonGenus0.Tag = 0;
             this.radioButtonGenus0.Text = "Piano";
             this.radioButtonGenus0.UseVisualStyleBackColor = true;
-            this.radioButtonGenus0.CheckedChanged += new System.EventHandler(this.radioButtonGenus_Click);
+            this.radioButtonGenus0.CheckedChanged += new System.EventHandler(this.RadioButtonGenus_Click);
             // 
             // panelMidiSpecies
             // 
@@ -408,7 +410,7 @@ namespace QabcPlayMidi {
             this.panelMidiSpecies.Location = new System.Drawing.Point(2, 19);
             this.panelMidiSpecies.Margin = new System.Windows.Forms.Padding(2);
             this.panelMidiSpecies.Name = "panelMidiSpecies";
-            this.panelMidiSpecies.Size = new System.Drawing.Size(179, 237);
+            this.panelMidiSpecies.Size = new System.Drawing.Size(184, 237);
             this.panelMidiSpecies.TabIndex = 31;
             this.panelMidiSpecies.Tag = "0";
             this.toolTip1.SetToolTip(this.panelMidiSpecies, "Select the specific instrument to play.");
@@ -438,7 +440,7 @@ namespace QabcPlayMidi {
             this.radioButtonSpecies0.Tag = 0;
             this.radioButtonSpecies0.Text = "Popcorn";
             this.radioButtonSpecies0.UseVisualStyleBackColor = true;
-            this.radioButtonSpecies0.Click += new System.EventHandler(this.radioButtonSpecies_Click);
+            this.radioButtonSpecies0.Click += new System.EventHandler(this.RadioButtonSpecies_Click);
             // 
             // grpTunes
             // 
@@ -493,7 +495,7 @@ namespace QabcPlayMidi {
             this.buttonExit.Text = "E&xit";
             this.toolTip1.SetToolTip(this.buttonExit, "Exit application (ALT-F4)");
             this.buttonExit.UseVisualStyleBackColor = true;
-            this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
+            this.buttonExit.Click += new System.EventHandler(this.ButtonExit_Click);
             // 
             // buttonHelp
             // 
@@ -505,7 +507,7 @@ namespace QabcPlayMidi {
             this.buttonHelp.TabIndex = 13;
             this.buttonHelp.Text = "&Help";
             this.buttonHelp.UseVisualStyleBackColor = true;
-            this.buttonHelp.Click += new System.EventHandler(this.buttonHelp_Click);
+            this.buttonHelp.Click += new System.EventHandler(this.ButtonHelp_Click);
             // 
             // radioButton36
             // 
@@ -520,7 +522,7 @@ namespace QabcPlayMidi {
             this.radioButton36.Text = "&B - Can You Recognize It?";
             this.toolTip1.SetToolTip(this.radioButton36, "Select a tune to play.");
             this.radioButton36.UseVisualStyleBackColor = true;
-            this.radioButton36.Click += new System.EventHandler(this.radioButton_Click);
+            this.radioButton36.Click += new System.EventHandler(this.RadioButton_Click);
             // 
             // radioButton35
             // 
@@ -535,7 +537,7 @@ namespace QabcPlayMidi {
             this.radioButton35.Text = "&A - Doe, a deer";
             this.toolTip1.SetToolTip(this.radioButton35, "Select a tune to play.");
             this.radioButton35.UseVisualStyleBackColor = true;
-            this.radioButton35.Click += new System.EventHandler(this.radioButton_Click);
+            this.radioButton35.Click += new System.EventHandler(this.RadioButton_Click);
             // 
             // radioButton5
             // 
@@ -549,7 +551,7 @@ namespace QabcPlayMidi {
             this.radioButton5.Text = "&4 - Ecuador";
             this.toolTip1.SetToolTip(this.radioButton5, "Select a tune to play.");
             this.radioButton5.UseVisualStyleBackColor = true;
-            this.radioButton5.Click += new System.EventHandler(this.radioButton_Click);
+            this.radioButton5.Click += new System.EventHandler(this.RadioButton_Click);
             // 
             // radioButton6
             // 
@@ -563,7 +565,7 @@ namespace QabcPlayMidi {
             this.radioButton6.Text = "&5 - God Save The Queen";
             this.toolTip1.SetToolTip(this.radioButton6, "Select a tune to play.");
             this.radioButton6.UseVisualStyleBackColor = true;
-            this.radioButton6.Click += new System.EventHandler(this.radioButton_Click);
+            this.radioButton6.Click += new System.EventHandler(this.RadioButton_Click);
             // 
             // radioButton7
             // 
@@ -578,7 +580,7 @@ namespace QabcPlayMidi {
             this.radioButton7.Text = "&6 - Yankee Doodle";
             this.toolTip1.SetToolTip(this.radioButton7, "Select a tune to play.");
             this.radioButton7.UseVisualStyleBackColor = true;
-            this.radioButton7.Click += new System.EventHandler(this.radioButton_Click);
+            this.radioButton7.Click += new System.EventHandler(this.RadioButton_Click);
             // 
             // radioButton8
             // 
@@ -593,7 +595,7 @@ namespace QabcPlayMidi {
             this.radioButton8.Text = "&7 - Funeral March";
             this.toolTip1.SetToolTip(this.radioButton8, "Select a tune to play.");
             this.radioButton8.UseVisualStyleBackColor = true;
-            this.radioButton8.Click += new System.EventHandler(this.radioButton_Click);
+            this.radioButton8.Click += new System.EventHandler(this.RadioButton_Click);
             // 
             // radioButton9
             // 
@@ -608,7 +610,7 @@ namespace QabcPlayMidi {
             this.radioButton9.Text = "&8 - Take Me Out To The Ball Game";
             this.toolTip1.SetToolTip(this.radioButton9, "Select a tune to play.");
             this.radioButton9.UseVisualStyleBackColor = true;
-            this.radioButton9.Click += new System.EventHandler(this.radioButton_Click);
+            this.radioButton9.Click += new System.EventHandler(this.RadioButton_Click);
             // 
             // radioButton10
             // 
@@ -623,7 +625,7 @@ namespace QabcPlayMidi {
             this.radioButton10.Text = "&9 - Macarena";
             this.toolTip1.SetToolTip(this.radioButton10, "Select a tune to play.");
             this.radioButton10.UseVisualStyleBackColor = true;
-            this.radioButton10.Click += new System.EventHandler(this.radioButton_Click);
+            this.radioButton10.Click += new System.EventHandler(this.RadioButton_Click);
             // 
             // radioButton4
             // 
@@ -637,7 +639,7 @@ namespace QabcPlayMidi {
             this.radioButton4.Text = "&3 - Popcorn";
             this.toolTip1.SetToolTip(this.radioButton4, "Select a tune to play.");
             this.radioButton4.UseVisualStyleBackColor = true;
-            this.radioButton4.Click += new System.EventHandler(this.radioButton_Click);
+            this.radioButton4.Click += new System.EventHandler(this.RadioButton_Click);
             // 
             // radioButton3
             // 
@@ -651,7 +653,7 @@ namespace QabcPlayMidi {
             this.radioButton3.Text = "&2 - The Lion Sleeps Tonight";
             this.toolTip1.SetToolTip(this.radioButton3, "Select a tune to play.");
             this.radioButton3.UseVisualStyleBackColor = true;
-            this.radioButton3.Click += new System.EventHandler(this.radioButton_Click);
+            this.radioButton3.Click += new System.EventHandler(this.RadioButton_Click);
             // 
             // radioButton2
             // 
@@ -665,7 +667,7 @@ namespace QabcPlayMidi {
             this.radioButton2.Text = "&1 - Jingle Bells";
             this.toolTip1.SetToolTip(this.radioButton2, "Select a tune to play.");
             this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.Click += new System.EventHandler(this.radioButton_Click);
+            this.radioButton2.Click += new System.EventHandler(this.RadioButton_Click);
             // 
             // radioButton1
             // 
@@ -681,7 +683,7 @@ namespace QabcPlayMidi {
             this.radioButton1.Text = "&0 - Finale William Tell Overture";
             this.toolTip1.SetToolTip(this.radioButton1, "Select a tune to play.");
             this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.Click += new System.EventHandler(this.radioButton_Click);
+            this.radioButton1.Click += new System.EventHandler(this.RadioButton_Click);
             // 
             // splitContainer2
             // 
@@ -705,7 +707,7 @@ namespace QabcPlayMidi {
             this.splitContainer2.Panel2.BackColor = System.Drawing.SystemColors.Control;
             this.splitContainer2.Panel2.Controls.Add(this.gridCompileErrors);
             this.splitContainer2.Size = new System.Drawing.Size(613, 492);
-            this.splitContainer2.SplitterDistance = 438;
+            this.splitContainer2.SplitterDistance = 443;
             this.splitContainer2.SplitterWidth = 3;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -728,7 +730,7 @@ namespace QabcPlayMidi {
             this.musicSplitContainer1.Panel2.Controls.Add(this.pbHighlight);
             this.musicSplitContainer1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.musicSplitContainer1.ScoreHighlighter = null;
-            this.musicSplitContainer1.Size = new System.Drawing.Size(613, 423);
+            this.musicSplitContainer1.Size = new System.Drawing.Size(613, 428);
             this.musicSplitContainer1.SplitterDistance = 142;
             this.musicSplitContainer1.TabIndex = 29;
             this.musicSplitContainer1.Tune = null;
@@ -746,13 +748,14 @@ namespace QabcPlayMidi {
         '\"',
         '\'',
         '\''};
-            this.txtMusicString.AutoScrollMinSize = new System.Drawing.Size(2, 14);
+            this.txtMusicString.AutoScrollMinSize = new System.Drawing.Size(27, 14);
             this.txtMusicString.BackBrush = null;
             this.txtMusicString.CharHeight = 14;
             this.txtMusicString.CharWidth = 8;
             this.txtMusicString.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtMusicString.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.txtMusicString.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtMusicString.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.txtMusicString.IsReplaceMode = false;
             this.txtMusicString.Location = new System.Drawing.Point(0, 0);
             this.txtMusicString.Name = "txtMusicString";
@@ -763,7 +766,7 @@ namespace QabcPlayMidi {
             this.txtMusicString.Size = new System.Drawing.Size(609, 138);
             this.txtMusicString.TabIndex = 1;
             this.txtMusicString.Zoom = 100;
-            this.txtMusicString.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.txtMusicString_TextChanged);
+            this.txtMusicString.TextChanged += new System.EventHandler<FastColoredTextBoxNS.TextChangedEventArgs>(this.TxtMusicString_TextChanged);
             // 
             // pbHighlight
             // 
@@ -772,7 +775,7 @@ namespace QabcPlayMidi {
             this.pbHighlight.Location = new System.Drawing.Point(0, 0);
             this.pbHighlight.Name = "pbHighlight";
             this.pbHighlight.ScoreProvider = null;
-            this.pbHighlight.Size = new System.Drawing.Size(609, 273);
+            this.pbHighlight.Size = new System.Drawing.Size(609, 278);
             this.pbHighlight.SourceProvider = null;
             this.pbHighlight.TabIndex = 0;
             // 
@@ -826,12 +829,12 @@ namespace QabcPlayMidi {
             this.gridCompileErrors.RowHeadersVisible = false;
             this.gridCompileErrors.RowTemplate.Height = 24;
             this.gridCompileErrors.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.gridCompileErrors.Size = new System.Drawing.Size(609, 47);
+            this.gridCompileErrors.Size = new System.Drawing.Size(609, 42);
             this.gridCompileErrors.TabIndex = 27;
             this.toolTip1.SetToolTip(this.gridCompileErrors, "Error messages from QABC Parser");
-            this.gridCompileErrors.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridCompileErrors_CellDoubleClick);
-            this.gridCompileErrors.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridCompileErrors_CellDoubleClick);
-            this.gridCompileErrors.Resize += new System.EventHandler(this.gridCompileErrors_Resize);
+            this.gridCompileErrors.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridCompileErrors_CellDoubleClick);
+            this.gridCompileErrors.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridCompileErrors_CellDoubleClick);
+            this.gridCompileErrors.Resize += new System.EventHandler(this.GridCompileErrors_Resize);
             // 
             // dataGridViewTextBoxColumn3
             // 

@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using PGSoftwareSolutions.Util;
 
 namespace PGSoftwareSolutions.Music {
     public partial class MidiPlayerControl: UserControl {
@@ -18,7 +13,7 @@ namespace PGSoftwareSolutions.Music {
         }
 
         RadioButton[] _radioButtonGenus = new RadioButton[16];
-        void InitRadioButtonGenus(IList<IInstrumentGenus> instruments) {
+        void InitRadioButtonGenus(IReadOnlyList<IInstrumentGenus> instruments) {
             var master = radioButtonGenus0;
             _radioButtonGenus[0] = master;
 
@@ -41,7 +36,7 @@ namespace PGSoftwareSolutions.Music {
 
             InitRadioButtonSpecies(instruments[0].Species);
         }
-        void SetRadioButtonGenus(IList<IInstrumentGenus> instruments) {
+        void SetRadioButtonGenus(IReadOnlyList<IInstrumentGenus> instruments) {
             for (int i = 0; i < 16; i++) {
                 _radioButtonGenus[i].Tag = instruments[i];
                 _radioButtonGenus[i].Text = instruments[i].Name;
@@ -49,7 +44,7 @@ namespace PGSoftwareSolutions.Music {
         }
 
         RadioButton[] _radioButtonSpecies = new RadioButton[8];
-        void InitRadioButtonSpecies(IList<IInstrument> species) {
+        void InitRadioButtonSpecies(IReadOnlyList<IInstrument> species) {
             _radioButtonSpecies[0] = radioButtonSpecies0;
             for (int i = 1; i < 8; i++) {
                 _radioButtonSpecies[i] = new RadioButton();
@@ -65,7 +60,7 @@ namespace PGSoftwareSolutions.Music {
             }
             SetRadioButtonSpecies(species);
         }
-        void SetRadioButtonSpecies(IList<IInstrument> species) {
+        void SetRadioButtonSpecies(IReadOnlyList<IInstrument> species) {
             for (int i = 0; i < 8; i++) {
                 _radioButtonSpecies[i].Tag = species[i];
                 _radioButtonSpecies[i].Text = species[i].Name;

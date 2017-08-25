@@ -7,6 +7,7 @@ using System;
 using System.Media;
 
 namespace PGSoftwareSolutions.Music {
+    /// <summary>TODO</summary>
 	public class WavePlayer : AbstractWavePlayer, IDisposable {
 		/// <summary> Clean up all managed & unmanaged resources being used. </summary>
 		public virtual void Dispose() { Dispose (true); }
@@ -23,22 +24,27 @@ namespace PGSoftwareSolutions.Music {
 
 //		public WavePlayer(Tune<INote> tune) 
 //			: this(tune,new CustomSynthesizer()) { }
+        /// <summary>TODO</summary>
 		public WavePlayer(Tune<INote> tune, ISynthesizerControls synth) : base(synth) {
 			if (tune == null)		throw new ArgumentNullException("tune");
 			Tune = tune;
 			Player = new SoundPlayer();
 		}
+        /// <summary>TODO</summary>
 		public override void PlayAsync() {
 			if (Player.Stream != null) Player.Stream.Dispose();
 			Player.Stream = new WaveStream(Tune, Synthesizer, null); ;
 			Player.Play();
 		}
+        /// <summary>TODO</summary>
 		public override void Cancel() {
 			if (Player != null) Player.Stop();
 			OnPlayCompleted(new PlayCompletedEventArgs(true));
 		}
 
+        /// <summary>TODO</summary>
 		protected Tune<INote> Tune		{ get; private set; }
+        /// <summary>TODO</summary>
 		protected SoundPlayer Player	{ get; private set; }
 	}
 }

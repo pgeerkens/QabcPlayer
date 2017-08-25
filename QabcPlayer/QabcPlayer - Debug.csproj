@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PGSoftwareSolutions.QabcPlayer</RootNamespace>
     <AssemblyName>QabcPlayer</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -50,7 +50,7 @@
     <ApplicationIcon>Midi.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>QabcPlayMidi.Program</StartupObject>
+    <StartupObject>PGSoftwareSolutions.QabcPlayer.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
@@ -62,7 +62,7 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>false</Prefer32Bit>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -155,6 +155,10 @@
     <ProjectReference Include="..\PlayWaveLib\PlayWaveLib - Debug.csproj">
       <Project>{242fd227-730c-4dcd-a626-a3dfe0934e09}</Project>
       <Name>PlayWaveLib - Debug</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QabcPlayerViewModel2\QabcPlayerViewModel.csproj">
+      <Project>{0fb85868-b30d-4f16-8fb4-032f12bf8877}</Project>
+      <Name>QabcPlayerViewModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\ScoreDisplay\ScoreDisplay - Debug.csproj">
       <Project>{13e70b45-9595-4c27-b56a-d99a702e0a21}</Project>

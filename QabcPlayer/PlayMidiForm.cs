@@ -25,9 +25,10 @@ using PGSoftwareSolutions.Music;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace QabcPlayMidi {
+namespace PGSoftwareSolutions.QabcPlayer {
     /// <summary>TODO</summary>
-	public partial class PlayMidiForm : Form, IMessageFilter {
+    [CLSCompliant(false)]
+	public partial class PlayMidiForm : Form, IMessageFilter, IQabcPlayerView {
         /// <inheritdoc />
         public PlayMidiForm() {
 			InitializeComponent();
@@ -47,8 +48,21 @@ namespace QabcPlayMidi {
             pbHighlight.ScoreProvider    = PBScore;
         }
 
+        /// <inheritdoc/>
+        public event EventHandler<TuneSelectionEventArgs> TuneSelected;
+        /// <inheritdoc/>
+        public event EventHandler PlayStopRequested;
+        /// <inheritdoc/>
+        public event EventHandler PauseResumeRequested;
+        /// <inheritdoc/>
+        public event EventHandler ExitRequested;
+        /// <inheritdoc/>
+        public event EventHandler WaveLoadUnloadRequested;
+        /// <inheritdoc/>
+        public event EventHandler FormHelpRequested;
+       
         #region MIDI Player Control
-        private QabcIronyParser _qabcParser { get { return QabcIronyParser.Instance; } } 
+        private QabcIronyParser _qabcParser => QabcIronyParser.Instance;
 		private IAsyncPlayer    _midiPlayer;
 
 		private void SetEnablings(bool PlayEnabled) {
@@ -65,7 +79,7 @@ namespace QabcPlayMidi {
 			PBScore.HighQuality		= PlayEnabled;
 		}
 
-		private void buttonPlay_Click(object sender, EventArgs e) {
+		private void ButtonPlay_Click(object sender, EventArgs e) {
 			if (!buttonPlay.Checked) {
 				(_midiPlayer as ICancelablePlayer)?.Cancel();
 				buttonPause.Checked = false;
@@ -80,14 +94,15 @@ namespace QabcPlayMidi {
                     _midiPlayer.PlayCompleted += PlayCompleted;
 					_midiPlayer.PlayAsync(PBScore.Tune);
 				} catch (Exception ex) {
-					MessageBox.Show("Suitable exception handler required in buttonPlay_Click:\n"+ex.Message);
+                    var message = ex.Message + Environment.NewLine + Environment.NewLine + ex.StackTrace;
+                    MessageBox.Show(message, ex.GetType().Name, MessageBoxButtons.OK, MessageBoxIcon.Stop);
 					SetEnablings(true);	// Aborted, so enable interface
 				}
 			}
 		}
 
 		private void PlayCompleted(object sender, PlayCompletedEventArgs e) {
-			_midiPlayer.PlayCompleted -= PlayCompleted;
+			if(_midiPlayer!= null) _midiPlayer.PlayCompleted -= PlayCompleted;
 			if (InvokeRequired)
 				Invoke( ((Action) (()=>{
 					SetEnablings(true);
@@ -99,14 +114,14 @@ namespace QabcPlayMidi {
 			}
 		}
 
-		private void buttonPause_CheckedChanged(object sender, EventArgs e) {
+		private void ButtonPause_CheckedChanged(object sender, EventArgs e) {
             var player = _midiPlayer as IPausablePlayer;
 
             if (player != null) {
                 player.PauseResume();
                 PBScore.HighQuality = 
-                buttonPause.Checked = player.IsPaused;
-                buttonPause.Text    = player.IsPaused ? "Resume" : "Pause";
+                buttonPause.Checked = ! player.IsRunning;
+                buttonPause.Text    = player.IsRunning ? "Pause" : "Resume" ;
                 buttonPause.Invalidate();
             }
         }
@@ -114,7 +129,7 @@ namespace QabcPlayMidi {
 
 		#region MIDI Instruments
 		RadioButton[]	_radioButtonGenus = new RadioButton[16];
-		void InitRadioButtonGenus(IList<IInstrumentGenus> instruments) {
+		void InitRadioButtonGenus(IReadOnlyList<IInstrumentGenus> instruments) {
             var master                = radioButtonGenus0;
             _radioButtonGenus[0]      = master;
 
@@ -130,14 +145,14 @@ namespace QabcPlayMidi {
                 _radioButtonGenus[i].TabIndex = master.TabIndex + i;
                 _radioButtonGenus[i].TabStop  = master.TabStop;
                 _radioButtonGenus[i].UseVisualStyleBackColor = master.UseVisualStyleBackColor;
-                _radioButtonGenus[i].Click   += radioButtonGenus_Click;
+                _radioButtonGenus[i].Click   += RadioButtonGenus_Click;
                 _radioButtonGenus[i].Visible  = true;
             }
             SetRadioButtonGenus(instruments);
 
             InitRadioButtonSpecies(instruments[0].Species);
         }
-        void SetRadioButtonGenus(IList<IInstrumentGenus> instruments) {
+        void SetRadioButtonGenus(IReadOnlyList<IInstrumentGenus> instruments) {
             for (int i = 0; i < 16; i++) {
                 _radioButtonGenus[i].Tag  = instruments[i];
                 _radioButtonGenus[i].Text = instruments[i].Name;
@@ -157,7 +172,7 @@ namespace QabcPlayMidi {
 				_radioButtonSpecies[i].Size		= radioButtonSpecies0.Size;
 				_radioButtonSpecies[i].TabIndex	= radioButtonSpecies0.TabIndex + i;
 				_radioButtonSpecies[i].UseVisualStyleBackColor = radioButtonSpecies0.UseVisualStyleBackColor;
-				_radioButtonSpecies[i].Click   += radioButtonSpecies_Click;
+				_radioButtonSpecies[i].Click   += RadioButtonSpecies_Click;
 			}
             SetRadioButtonSpecies(species);
         }
@@ -169,18 +184,18 @@ namespace QabcPlayMidi {
         }
 
 		private void PlayMidiForm_Load(object sender, EventArgs e) {
-            radioButtonGenus_Click(_radioButtonGenus[0],EventArgs.Empty);
+            RadioButtonGenus_Click(_radioButtonGenus[0],EventArgs.Empty);
 			InvokeBouncingBall(0,1);
 		}
 
-		private void radioButtonGenus_Click(object sender, EventArgs e) {
+		private void RadioButtonGenus_Click(object sender, EventArgs e) {
 			var genus = (IInstrumentGenus)((RadioButton)sender).Tag;
             SetRadioButtonSpecies(genus.Species);
-            radioButtonSpecies_Click(( from b in _radioButtonSpecies
+            RadioButtonSpecies_Click(( from b in _radioButtonSpecies
                                        where b.Checked
                                        select b).First(), e);
 		}
-		private void radioButtonSpecies_Click(object sender, EventArgs e) {
+		private void RadioButtonSpecies_Click(object sender, EventArgs e) {
             var species = ((IInstrument)((RadioButton)sender).Tag);
             panelMidiSpecies.Tag = species;
             (_midiPlayer as IInstrumentSettableMidiPlayer)?.SetInstrument(species);
@@ -242,7 +257,7 @@ namespace QabcPlayMidi {
 		#endregion Source Highlighting
 
 		#region Music String
-		private void txtMusicString_TextChanged(object sender, FastColoredTextBoxNS.TextChangedEventArgs e) {
+		private void TxtMusicString_TextChanged(object sender, FastColoredTextBoxNS.TextChangedEventArgs e) {
 			if (txtMusicString.Text == null) {
 				MessageBox.Show("No music to parse."); return;
 			}
@@ -260,7 +275,7 @@ namespace QabcPlayMidi {
             }
         }
 
-		private void gridCompileErrors_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
+		private void GridCompileErrors_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
 			if (e.RowIndex < 0 || e.RowIndex >= gridCompileErrors.Rows.Count) return;
             var err = gridCompileErrors.Rows[e.RowIndex].Cells[1].Value
 																as PGSoftwareSolutions.PGIrony.LogMessage;
@@ -275,13 +290,13 @@ namespace QabcPlayMidi {
 
         #region Form events & Misc.
         private IScoreProvider PBScore { get { return musicSplitContainer1; } }
-		private void gridCompileErrors_Resize(object sender, EventArgs e) {
+		private void GridCompileErrors_Resize(object sender, EventArgs e) {
 			dataGridViewTextBoxColumn4.Width = gridCompileErrors.Width - 5
 					- (dataGridViewTextBoxColumn1.Width + dataGridViewTextBoxColumn3.Width);
 		}
 
 		private System.Resources.ResourceSet _resourceSet;
-		private void radioButton_Click(object sender, EventArgs e) {
+		private void RadioButton_Click(object sender, EventArgs e) {
 			try {
 				txtMusicString.Text = _resourceSet.GetString((string)((RadioButton)sender).Tag);
                 PBScore.Tune = QabcIronyParser.Instance.Parse(txtMusicString.Text);
@@ -291,20 +306,20 @@ namespace QabcPlayMidi {
 			} finally {;}
 		}
 
-		private void buttonHelp_Click(object sender, EventArgs e) {
+		private void ButtonHelp_Click(object sender, EventArgs e) {
 			using (FormHelp formHelp = new FormHelp()) { formHelp.ShowDialog(); }
 		}
 
 		private void PlayMidiForm_KeyUp(object sender, KeyEventArgs e) {
 			if (e.KeyCode == Keys.F5) {
-				if (tabControl1.SelectedIndex == 0) 	buttonLoad_Click(sender,e);
-				else												buttonPlay_Click(sender,e);
+				if (tabControl1.SelectedIndex == 0) 	ButtonLoad_Click(sender,e);
+				else												ButtonPlay_Click(sender,e);
 			}
 		}
 		#endregion Form events & Misc.
 
 		#region Wave Player Control
-		private void buttonLoad_Click(object sender, EventArgs e) {
+		private void ButtonLoad_Click(object sender, EventArgs e) {
 			Cursor					= Cursors.WaitCursor;
 			if (buttonLoad.Checked)	LoadWaveFile();
 			else							UnloadWaveFile();
@@ -374,13 +389,13 @@ namespace QabcPlayMidi {
 				progressBar1.Visible	= false;
 			}
 		}
-		private void buttonShowWave_Click(object sender, EventArgs e) {
+		private void ButtonShowWave_Click(object sender, EventArgs e) {
 			var scol	= _waveStream.DisplayString();
 			var sb	= new StringBuilder();
 			for (int i = 0; i < 20; i++) { sb.Append(scol[i] + Environment.NewLine); }
 			MessageBox.Show(sb.ToString());
 		}
-        private void mediaPlayer_MediaError(object sender, AxWMPLib._WMPOCXEvents_MediaErrorEvent e) {
+        private void MediaPlayer_MediaError(object sender, AxWMPLib._WMPOCXEvents_MediaErrorEvent e) {
             var errSource = e.pMediaObject as IWMPMedia2;
             if (errSource != null) {
                 var errorItem = errSource.Error;
@@ -445,7 +460,7 @@ namespace QabcPlayMidi {
 		#endregion
 
 		#region Shutdown
-		private void buttonExit_Click(object sender, EventArgs e) { Close();	}
+		private void ButtonExit_Click(object sender, EventArgs e) { Close();	}
 		private void PlayMidiForm_FormClosing(object sender, FormClosingEventArgs e) {
 			Application.Exit();
 		}
@@ -455,7 +470,7 @@ namespace QabcPlayMidi {
         }
         #endregion Shutdown
 
-        private void tabControl1_TabIndexChanged(object sender, EventArgs e) {
+        private void TabControl1_TabIndexChanged(object sender, EventArgs e) {
             progressBar1.Visible =
             buttonLoad.Visible =
             buttonShowWave.Visible = (tabControl1.SelectedIndex == 0);

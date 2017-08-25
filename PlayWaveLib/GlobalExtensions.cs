@@ -18,15 +18,15 @@ namespace System.Windows.Forms {
 		/// <summary>None.</summary>
 		None		= 0x00,
 		/// <summary>Left mouse button.</summary>
-		LButton	= 0x01,
+		LButton	    = 0x01,
 		/// <summary>Right mouse button.</summary>
-		RButton	= 0x02,
+		RButton	    = 0x02,
 		/// <summary>Shift key.</summary>
 		Shift		= 0x04,
 		/// <summary>Control key.</summary>
-		Control	= 0x08,
+		Control	    = 0x08,
 		/// <summary>Middle mouse button.</summary>
-		MButton	= 0x10,
+		MButton	    = 0x10,
 		/// <summary>First mouse X button.</summary>
 		XButton1	= 0x20,
 		/// <summary>Second mouse X button.</summary>
@@ -34,12 +34,10 @@ namespace System.Windows.Forms {
 	}
     /// <summary>TODO</summary>
 	internal static class MouseInput {
-    /// <summary>TODO</summary>
-		public static MouseKeys GetKeyStateWParam(IntPtr wParam) {
-			return (MouseKeys)(wParam.ToInt32() & 0x0000ffff);
-		}
-    /// <summary>TODO</summary>
-		public static Int16 WheelDelta(IntPtr wParam) {
+        /// <summary>TODO</summary>
+        public static MouseKeys GetKeyStateWParam(IntPtr wParam) => (MouseKeys)(wParam.ToInt32() & 0x0000ffff);
+        /// <summary>TODO</summary>
+        public static Int16 WheelDelta(IntPtr wParam) {
 			return (Int16)(wParam.ToInt32() >> 16);
 		}
     /// <summary>TODO</summary>
@@ -69,23 +67,23 @@ namespace System.Windows.Forms {
 
 }
 namespace  PGSoftwareSolutions.Util {
-	/// <summary>
-	/// Generic thread-safe event-raisers
-	/// </summary>
-	/// <see href="http://blog.quantumbitdesigns.com/tag/events/"/>
-	internal static class EventExtensions {
-		/// <summary>Generic thread-safe event-raiser.</summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="eventHandler"></param>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		/// <see href="http://blog.quantumbitdesigns.com/tag/events/"/>
-		[MethodImpl(MethodImplOptions.NoInlining)]
- 		public static void RaiseEvent<T>(this EventHandler<T> eventHandler, object sender, T e) 
-		where T : EventArgs {
-			eventHandler?.Invoke(sender, e);
-		}
-	}
+	///// <summary>
+	///// Generic thread-safe event-raisers
+	///// </summary>
+	///// <see href="http://blog.quantumbitdesigns.com/tag/events/"/>
+	//internal static class EventExtensions {
+	//	/// <summary>Generic thread-safe event-raiser.</summary>
+	//	/// <typeparam name="T"></typeparam>
+	//	/// <param name="eventHandler"></param>
+	//	/// <param name="sender"></param>
+	//	/// <param name="e"></param>
+	//	/// <see href="http://blog.quantumbitdesigns.com/tag/events/"/>
+	//	[MethodImpl(MethodImplOptions.NoInlining)]
+ //		public static void RaiseEvent<T>(this EventHandler<T> eventHandler, object sender, T e) 
+	//	where T : EventArgs {
+	//		eventHandler?.Invoke(sender, e);
+	//	}
+	//}
 
     /// <summary>TODO</summary>
 	internal static class Utils {

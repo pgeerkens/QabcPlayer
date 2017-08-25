@@ -10,12 +10,14 @@ namespace Irony.GrammarExplorer.Highlighter {
   /// </summary>
   public class WavyLineStyle : Style {
 
+        /// <summary>TODO</summary>
     public WavyLineStyle(int alpha, Color color) {
       Pen = new Pen(Color.FromArgb(alpha, color));
     }
 
     private Pen Pen { get; set; }
 
+        /// <summary>TODO</summary>
     public override void Draw(Graphics gr, Point pos, Range range) {
       var size = GetSizeOfRange(range);
       var start = new Point(pos.X, pos.Y + size.Height - 1);

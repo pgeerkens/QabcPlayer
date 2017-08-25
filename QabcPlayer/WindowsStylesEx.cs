@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace PGSoftwareSolutions.Util {
-   [Flags]     
+    /// <summary>TODO</summary>
+   [Flags] [CLSCompliant(false)]
    public enum WindowStylesEx : uint 
    {
       /// <summary>

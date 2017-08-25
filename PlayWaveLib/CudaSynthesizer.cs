@@ -1,38 +1,41 @@
-﻿using System;
-using Cudafy;
+﻿using Cudafy;
+using System.Threading.Tasks;
 
 namespace PGSoftwareSolutions.Music {
     class CudaSynthesizer : Synthesizer {
-		public CudaSynthesizer()							: base() {} //ParseSynthesizer(Code_Synthesizer)) { }
-		public static string Code_Synthesizer	{ get { return ResourcesSynth.Code_Synthesizer; } }
+		public CudaSynthesizer()							: base() {}
+		public new static string Code_Synthesizer	{ get { return ResourcesSynth.Code_Synthesizer; } }
 
-#if undefined
 		[Cudafy]
-		protected override short[] NoteSamples(INote note) {
+		private static short[] NoteSamples(ISynthesizerControls synth, INote note) {
 			const uint amplitudeBase = short.MaxValue / 32;
 
-			int maxSamples		= (int)GMath.Floor(SampleRate * (float)note.LengthSeconds);
-			short[] samples	= new short[maxSamples];
+            var _parallelOptions        = new ParallelOptions {
+                MaxDegreeOfParallelism = synth.MaxDegreeeOfParallelism
+            };
 
-			int	maxFreq		= (ushort)(SampleRate / 2);	// theoretical limit
+			int maxSamples		= (int)GMath.Floor(SampleRate * (float)note.LengthSeconds);
+			short[] samples	    = new short[maxSamples];
+
+			int	maxFreq		    = (ushort)(SampleRate / 2);	// theoretical limit
 			float energy		= amplitudeBase * GMath.Pow(2, note.Energy);
 			float dTime			= 1.0F / SampleRate;
 
-			float frequency	= (float)note.Frequency;
+			float frequency	    = (float)note.Frequency;
 			float duration		= (float)note.Duration;
 			float lengthSecs	= (float)note.LengthSeconds;
 
-			Parallel.For(0, maxSamples, ParallelOptions, index => {
+			Parallel.For(0, maxSamples, _parallelOptions, index => {
 				float dSample = 0;
 				if (frequency > 0) {
 					int maxHarmonic = maxFreq / (int)GMath.Floor(frequency);
 					float basePhase = 2 * GMath.PI * frequency * dTime * index;
 					float freqHarmonic = frequency;
 					for (int harmonic = 1; harmonic < maxHarmonic; harmonic++, freqHarmonic += frequency) {
-						dSample += GMath.Sin(harmonic * basePhase) * CudaSynthesizer.HarmonicDecay(harmonic)
-									* CudaSynthesizer.FrequencyResponse(freqHarmonic);
+						dSample += GMath.Sin(harmonic * basePhase) * HarmonicDecay(harmonic)
+									* FrequencyResponse(freqHarmonic);
 					}
-					dSample *= energy * CudaSynthesizer.Adsr(duration, lengthSecs, dTime * index);
+					dSample *= energy * Adsr(duration, lengthSecs, dTime * index);
 
 					if (dSample > short.MaxValue) { dSample = short.MaxValue; }
 					if (dSample < short.MinValue) { dSample = short.MinValue; }
@@ -41,9 +44,8 @@ namespace PGSoftwareSolutions.Music {
 			});
 			return samples;
 		}
-		public override int SampleRate { get { return 44100; } } // per second
-#endif
-		public int MaxDegreeeOfParallelism { get { return -1; } }
+		public static int SampleRate { get { return 44100; } } // per second
+		public static int MaxDegreeeOfParallelism { get { return -1; } }
 
 		// Attack-Decay-Sustain-Release control:
 		//--------------------------------------
@@ -84,9 +86,9 @@ namespace PGSoftwareSolutions.Music {
 		public static float FrequencyResponse(float frequency) {
 			return  
 				(frequency < 5000) ? 0.25F + frequency/ 5000 // 0.25 - 1.25
-			: (frequency <10000) ? 1.75F - frequency/10000 // 1.25 - 0.75
-										: 1.25F - frequency/20000 // 0.75 - 0.125
-										;
+			  : (frequency <10000) ? 1.75F - frequency/10000 // 1.25 - 0.75
+								   : 1.25F - frequency/20000 // 0.75 - 0.125
+								   ;
 		}
 	}
 }

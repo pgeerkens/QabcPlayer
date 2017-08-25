@@ -69,33 +69,6 @@ namespace System.Windows.Forms {
 
 }
 namespace  PGSoftwareSolutions.Util {
-	/// <summary>
-	/// Generic thread-safe event-raisers
-	/// </summary>
-	/// <see href="http://blog.quantumbitdesigns.com/tag/events/"/>
-	public static class EventExtensions {
-		/// <summary>Generic thread-safe event-raiser.</summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="eventHandler"></param>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		/// <see href="http://blog.quantumbitdesigns.com/tag/events/"/>
-		[MethodImpl(MethodImplOptions.NoInlining)]
- 		public static void RaiseEvent<T>(this EventHandler<T> eventHandler, object sender, T e) 
-		where T : EventArgs {
-			if (eventHandler != null) { eventHandler(sender, e); }
-		}
-		/// <summary>Thread-safe event-raiser.</summary>
-		/// <param name="eventHandler"></param>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		/// <see href="http://blog.quantumbitdesigns.com/tag/events/"/>
-		[MethodImpl(MethodImplOptions.NoInlining)]
- 		public static void RaiseEvent(this EventHandler eventHandler, object sender, EventArgs e) {
-			if (eventHandler != null) { eventHandler(sender, e); }
-		}
-	}
-
     /// <summary>TODO</summary>
 	public static class Utils {
 		/// <summary>Returns all the extension methods for a type available to a specified assembly.</summary>

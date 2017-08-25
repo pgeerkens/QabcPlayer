@@ -36,7 +36,10 @@ using System.Text;
 
 using Microsoft.CSharp;
 
+using PGSoftwareSolutions.Util.PlayWaveLib;
+
 namespace PGSoftwareSolutions.Music {
+    /// <summary>TODO</summary>
 	public interface ISynthesizerControls {
 		/// <summary> Expression tree <i>Expression&lt;Func&lt;double, double, double, 
 		/// double&gt;&gt;</i> for the user-defined definition of the ADSR (Attack-Decay-
@@ -53,15 +56,21 @@ namespace PGSoftwareSolutions.Music {
 		/// <param name="harmonic">uint: number of the current harmonic (base note = 1)</param>
 		/// <return>double: Fraction of 1.0D to be applied to the note's amplitude</return>
 		Expression<Func<int, double>>								HarmonicDecay();
+        /// <summary>TODO</summary>
 		Expression<Func<double,double>>							FrequencyResponse();
+        /// <summary>TODO</summary>
 		int SampleRate						{ get; }
+        /// <summary>TODO</summary>
 		int MaxDegreeeOfParallelism	{ get; }
 	}
 
+    /// <summary>TODO</summary>
 	public class SynthesizerParseErrorsException : Exception {
+        /// <summary>TODO</summary>
 		public SynthesizerParseErrorsException(string errorList) : base(errorList) { }
 	}
 
+    /// <summary>TODO</summary>
 	public class Synthesizer {
 		/// <summary>
 		/// Prepares (and saves) the calculated expression trees for the default internal
@@ -77,9 +86,10 @@ namespace PGSoftwareSolutions.Music {
 		public static ISynthesizerControls ParseSynthesizer(string cSharpCode) {
 			CompilerResults		results;
 			using(CSharpCodeProvider provider	= new CSharpCodeProvider()) {
-				CompilerParameters parameters	= new CompilerParameters();
-				parameters.GenerateInMemory		= true;
-				parameters.ReferencedAssemblies.Add(@"System.dll");
+                CompilerParameters parameters = new CompilerParameters {
+                    GenerateInMemory        = true
+                };
+                parameters.ReferencedAssemblies.Add(@"System.dll");
 				parameters.ReferencedAssemblies.Add(@"System.Core.dll");
 				parameters.ReferencedAssemblies.Add(@"PlayWaveLib.dll");
 
@@ -106,8 +116,10 @@ namespace PGSoftwareSolutions.Music {
 				}
 			}
 		}
+        /// <summary>TODO</summary>
 		public static string Code_Synthesizer	{ get { return ResourcesSynth.Code_Synthesizer; } }
 
+        /// <summary>TODO</summary>
 		public static IWaveSamples Load(Tune<INote> notes, ISynthesizerControls synthCtls, Action<int> pbarDelegate) {
 			var samples = new List<short>();
 			for(int i = 0; i < notes.Count; i++) {
@@ -116,24 +128,26 @@ namespace PGSoftwareSolutions.Music {
 			}
 			return new WaveSamples(synthCtls.SampleRate, samples);
 		}
+        /// <summary>TODO</summary>
 		private static short[] NoteSamples(ISynthesizerControls synth, INote note) {
 			const uint	amplitudeBase	= short.MaxValue / 32;
 			int sampleRate				= synth.SampleRate;
-			var adsr						= synth.Adsr().Compile();
+			var adsr					= synth.Adsr().Compile();
 			var harmonicDecay			= synth.HarmonicDecay().Compile();
-			var frequencyResponse	= synth.FrequencyResponse().Compile();
-			var _parallelOptions		= new ParallelOptions();
-			_parallelOptions.MaxDegreeOfParallelism = synth.MaxDegreeeOfParallelism;
+			var frequencyResponse	    = synth.FrequencyResponse().Compile();
+            var _parallelOptions        = new ParallelOptions {
+                MaxDegreeOfParallelism = synth.MaxDegreeeOfParallelism
+            };
 
-			int maxSamples		= (int)Math.Floor(sampleRate * note.LengthSeconds);
-			short[] samples	= new short[maxSamples];
+            int maxSamples		= (int)Math.Floor(sampleRate * note.LengthSeconds);
+			short[] samples	    = new short[maxSamples];
 
-			int	maxFreq		= (ushort)(sampleRate / 2);	// theoretical limit
+			int	maxFreq		    = (ushort)(sampleRate / 2);	// theoretical limit
 			double energy		= amplitudeBase * Math.Pow(2, note.Energy);
 			double dTime		= 1.0 / sampleRate;
 
 			double frequency	= note.Frequency;
-			double duration	= note.Duration;
+			double duration	    = note.Duration;
 			double lengthSecs	= note.LengthSeconds;
 
 			Parallel.For(0, maxSamples, _parallelOptions, index => {
@@ -157,7 +171,9 @@ namespace PGSoftwareSolutions.Music {
 		}
 	}
 
+        /// <summary>TODO</summary>
 	public class WaveSamples : IWaveSamples {
+        /// <summary>TODO</summary>
 		public WaveSamples(int sampleRate, List<short> samples) { 
 			SampleRate = sampleRate;
 			_samples = samples;
@@ -167,7 +183,9 @@ namespace PGSoftwareSolutions.Music {
 							get { return _samples[i]; }
 			protected	set { _samples[i] = value; }
 		} internal List<short> _samples;
+        /// <summary>TODO</summary>
 		public int Length { get { return _samples.Count; } }
+        /// <summary>TODO</summary>
 		public int SampleRate { get; private set; }
 	}
 }

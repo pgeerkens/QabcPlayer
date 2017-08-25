@@ -1,0 +1,877 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>QABCParser</name>
+    </assembly>
+    <members>
+        <member name="T:Irony.Ast.AbstractAstNode">
+            <summary>Abstract base class for all AstNodes. Contains mucho boilerplate to support 
+            tree-walking, mostly adapted from Irony.Interpreter.Ast. </summary>
+        </member>
+        <member name="M:Irony.Ast.AbstractAstNode.SetIsTail">
+            <summary>
+            Sets a flag indicating that the node is in tail position. The value is propagated from parent to children. 
+            Should propagate this call to appropriate children.
+            </summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.PGIrony.AstContext">
+            <summary>Ensures that the default AST node-types can all be created.</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.AstContext.#ctor(Irony.Parsing.LanguageData)">
+            <summary>Sets the default Node builders used by BuildAst.</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.AstNode`1.Init(Irony.Ast.AstContext,Irony.Parsing.ParseTreeNode)">
+            <summary>
+            Entry point, and error-handler, for all custom ASTNode creation invoked by the
+            Irony framework.
+            </summary>
+            <param name="context"></param>
+            <param name="treeNode"></param>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.AstNode`1.Init(`0,Irony.Parsing.ParseTreeNode)">
+            <summary>
+            Derived entry point for custom ASTNode creation.
+            </summary>
+            <param name="context"></param>
+            <param name="treeNode"></param>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.AstNode`1.DoMyWork(`0)">
+            <summary>
+            Stub, to be overridden by nodes that have evaluation work to do after their
+            ChildNodes have evaluated.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.AstNode`1.EvaluateTree(`0)">
+            <summary>
+            Evaluation-time AST-tree walker.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:PGSoftwareSolutions.PGIrony.CommandAstNode`1">
+            <summary>
+            Generic AST node encapsulating a strongly-typed value-type derived from a single (non-transient),
+            child node (usually a Terminal), and parameterizing an AST-Context environment setting.
+            </summary>
+            <typeparam name="TValue">The type of this command node</typeparam>
+        </member>
+        <member name="T:PGSoftwareSolutions.PGIrony.Grammar`1">
+            <summary>A subclass of Irony.Grammar providien additional boilerplate to ease construction of
+            AST's and List NonTerminals.</summary>
+            <typeparam name="TContext">The AstContext to be used in construction and walking of the AST tree.</typeparam>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.Grammar`1.#ctor(System.Boolean,Irony.Parsing.LanguageFlags)">
+            <summary>A subclass of Irony.Grammar providien additional boilerplate to ease construction of
+            AST's and List NonTerminals.</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.Grammar`1.GetContext(Irony.Parsing.LanguageData)">
+            <summary> Get sub-class' appropriate AstContext.</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.Grammar`1.RunSample(Irony.Parsing.RunSampleArgs)">
+            <summary>Override to enable use of Test.Run button in Grammar Explorer.</summary>
+            <param name="args"></param>
+            <returns>Message to be displayed in <i>Output</i> window.</returns>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.Grammar`1.SetHighlighting(System.Collections.Generic.IList{Irony.Parsing.Terminal},System.Collections.Generic.IList{Irony.Parsing.Terminal},System.Collections.Generic.IList{Irony.Parsing.Terminal},System.Collections.Generic.IList{Irony.Parsing.Terminal},System.Collections.Generic.IList{Irony.Parsing.Terminal},System.Collections.Generic.IList{Irony.Parsing.Terminal})">
+            <summary>Sets default colour-highlighting for six lists of <c>Terminals</c>.</summary>
+            <param name="comments"></param>
+            <param name="texts"></param>
+            <param name="literals"></param>
+            <param name="keywords"></param>
+            <param name="identifiers"></param>
+            <param name="strings"></param>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.Grammar`1.MakeStarList``1(Irony.Parsing.BnfTerm,Irony.Parsing.BnfTerm,System.Boolean)">
+            <summary>As MakeStarRule, except returns a constructed StarList NonTerminal.</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.Grammar`1.MakePlusList``1(Irony.Parsing.BnfTerm,Irony.Parsing.BnfTerm,System.Boolean)">
+            <summary>As MakePlusRule, except returns a constructed PlusList NonTerminal.</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.Grammar`1.MakeListRule(Irony.Parsing.NonTerminal,Irony.Parsing.BnfTerm,Irony.Parsing.BnfTerm,Irony.Parsing.TermListOptions)">
+            <summary>Preserves default behaviour of base class with a shared codebase.</summary>
+            <returns>Returns the List-Rule constructed for the supplied List.</returns>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.Grammar`1.MakeList(Irony.Parsing.NonTerminal,Irony.Parsing.BnfTerm,Irony.Parsing.BnfTerm,Irony.Parsing.TermListOptions)">
+            <summary>Implementation posted by Roman 2012-09-23, except returns <i>list</i> instead of <i>list.Rule</i>.</summary>
+            <param name="list">A <code>NonTerminal</code> designating the <i>List</i> to be constructed.</param>
+            <param name="delimiter">A <code>BnfTerm</code> for the list delimiter; specify null if not a delimited list, and specify 
+            <code>TermOptions.AllowTrailingDelimiter</code> as an option as required.</param>
+            <param name="listMember">A <code>BnfTerm</code> for the prescribed members of the list.</param>
+            <param name="options">The <code>TermListOptions</code> desired for the list.</param>
+            <returns>A <code>NonTerminal</code> for the list.</returns>
+        </member>
+        <member name="T:PGSoftwareSolutions.PGIrony.LogMessage">
+            <summary>Extension of Iorny.LogMessage that provides a SourceSpan, with the token length as well sa position.</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.LogMessage.#ctor(Irony.ErrorLevel,Irony.Parsing.SourceSpan,System.String,Irony.Parsing.ParserState)">
+            <summary>Extension of Iorny.LogMessage that provides a SourceSpan, with the token length as well sa position.</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.PGIrony.LogMessage.Span">
+            <summary>The token location and length in the text source.</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.PGIrony.TypedNonTerminal">
+            <summary>
+            Automatically set NonTerminal name as Type Name stripped of "Node"
+            </summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.TypedNonTerminal.#ctor(System.Type)">
+            <summary>
+            Automatically set NonTerminal name as Type Name stripped of "Node"
+            </summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.PGIrony.TypedNonTerminal`1">
+            <summary>A TypedNonTerminal of type <c>TValue</c>.</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.TypedNonTerminal`1.#ctor">
+            <summary>A TypedNonTerminal of type <c>TValue</c>.</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.PGIrony.TypedNonTerminal`2">
+            <summary>A TypedNonTerminal of type <c>TValue</c> in a custom <c>AstContext</c>.</summary>
+            <typeparam name="TAstContext"></typeparam>
+            <typeparam name="TAstNodeType"></typeparam>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.TypedNonTerminal`2.#ctor">
+            <summary>A TypedNonTerminal of type <c>TValue</c> in a custom <c>AstContext</c>.</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.PGIrony.CommandNonTerminal`2">
+            <summary>A NonTerminal that <i>mirrors</i> its value to a specified 'setter' property of a <c>TClass</c> instance.</summary>
+            <typeparam name="TClass">Type of the object containing the mirror property.</typeparam>
+            <typeparam name="TValue">A 'getter' for the mirror property, from which a 'setter' will be inferred.</typeparam>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.CommandNonTerminal`2.#ctor(System.Linq.Expressions.Expression{System.Func{`0,`1}})">
+            <summary>Returns a NonTerminal publishing an internal AstNodeCreator using as its fieldUpdater
+             a <i>setter</i> for the given  class constructed from the supplied <i>getter</i>.</summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:PGSoftwareSolutions.PGIrony.CommandNonTerminal`2.CommandNodeCreator(System.Linq.Expressions.Expression{System.Func{`0,`1}})" -->
+        <member name="M:PGSoftwareSolutions.PGIrony.CommandNonTerminal`2.SetterFromGetter(System.Linq.Expressions.Expression{System.Func{`0,`1}})">
+            <summary>Returns a 'setter' for the class <c>TClass</c>, from the provided 'getter'.</summary>
+            <typeparam name="TClass"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="getter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PGSoftwareSolutions.PGIrony.TransientNonTerminal">
+            <summary>A NonTerminal automatically <i>marked</i>as transient.</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.PGIrony.RegexBasedTerminalX">
+            <summary>Identical to <see cref="T:Irony.Parsing.RegexBasedTerminal"/> (as of 2012-09-29) except options 
+            Compiled and ExplicitCapture are automatically set.</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.RegexBasedTerminalX.#ctor(System.String,System.String[])">
+            <summary>Identical to <see cref="T:Irony.Parsing.RegexBasedTerminal"/> (as of 2012-09-29) except options 
+            Compiled and ExplicitCapture are automatically set.</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.RegexBasedTerminalX.#ctor(System.String,System.String,System.String[])">
+            <summary>Identical to <see cref="T:Irony.Parsing.RegexBasedTerminal"/> (as of 2012-09-29) except options 
+            Compiled and ExplicitCapture are automatically set.</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.PGIrony.MusicIntegerLiteral`1">
+            <summary>A typed integer literal with the NumberOptions AllowLetterAfter and IntOnly set automatically.</summary>
+            <typeparam name="TValue">The type of the literal; one of byte, sbyte, int16, etc.</typeparam>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.MusicIntegerLiteral`1.#ctor(System.String)">
+            <summary>A typed integer literal with the NumberOptions AllowLetterAfter and IntOnly set automatically.</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.MusicIntegerLiteral`1.#ctor(System.String,Irony.Parsing.NumberOptions)">
+            <summary>A typed integer literal with the NumberOptions <i>AllowLetterAfter</i> and <i>IntOnly</i> set automatically.</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.PGIrony.RegexEnumTerm`1">
+            <summary> RegexBasedTerminal sub-class that parses the constants of enumeration <i>TValue</i> 
+            in determining the Value of the Terminal.
+            </summary>
+            <typeparam name="TValue">Must be an <i>Enum</i> type, but only enforced at run-time
+            as a constraint like <i>TValue : System.Enum</i> is forbidden.</typeparam>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.RegexEnumTerm`1.#ctor(System.String,System.Func{System.String,`0})">
+            <summary>RegexBasedTerminal sub-class that parses the constants of Enum <c>TValue</c>.</summary>
+            <param name="pattern">A regular-expression pattern for this enumeration.</param>
+            <exception cref="T:System.ArgumentException">ArgumentException</exception>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.RegexEnumTerm`1.#ctor(System.String,System.Func{Irony.Parsing.ParsingContext,System.String,`0})">
+            <summary>RegexBasedTerminal subclass that parses the constants of Enum <c>TValue</c>.</summary>
+            <param name="pattern">A regular-expression pattern for this enumeration.</param>
+            <param name="fromString">The parsing function to be used; defaults to: 
+            <c>(c,s) => (TValue)(System.Enum.Parse(EnumType, s.ToUpper()))</c>.</param>
+            <exception cref="T:System.ArgumentException">If TValue is not an enumeration</exception>
+        </member>
+        <member name="P:PGSoftwareSolutions.PGIrony.RegexEnumTerm`1.EnumType">
+            <summary>The <c>Type</c> of the enumeration that this Terminal parses.</summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:PGSoftwareSolutions.PGIrony.RegexEnumTerm`1.ConvertValue" -->
+        <member name="M:PGSoftwareSolutions.PGIrony.RegexEnumTerm`1.TryMatch(Irony.Parsing.ParsingContext,Irony.Parsing.ISourceStream)">
+            <summary>Returns a <c>Token</c> if a successful match made; else null.</summary>
+            <param name="context"></param>
+            <param name="source"></param>
+        </member>
+        <member name="T:PGSoftwareSolutions.PGIrony.MyKeyTerm">
+            <summary>A <i>KeyTerm</i>(inal) implementation that automatically sets <i>AllowAlphaAfterKeyword</i>.</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.PGIrony.MyKeyTerm.#ctor(System.String,System.String,System.Boolean)">
+            <summary>A <i>KeyTerm</i>(inal) implementation that automatically sets <i>AllowAlphaAfterKeyword</i>.</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Qabc.QabcAstContext">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Qabc.QabcAstContext.#ctor(Irony.Parsing.LanguageData)">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Qabc.QabcAstContext.Tune">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Qabc.QabcAstContext.NewInstance(Irony.Parsing.LanguageData)">
+            <summary>TODO</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Qabc.INoteNode">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Qabc.INoteNode.Note">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Qabc.INoteNode.NoteLetter">
+            <summary>TODO</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Qabc.QabcAstNode">
+            <summary>TODO</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Qabc.MusicListAstNode">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Qabc.MusicListAstNode.Tune">
+            <summary>TODO</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Qabc.NoteAstNode">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Qabc.NoteAstNode.DoMyWork(PGSoftwareSolutions.Qabc.QabcAstContext)">
+            <summary>TODO</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Qabc.NoteNumberAstNode">
+            <summary>TODO</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Qabc.QabcGrammar">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Qabc.QabcGrammar.#ctor">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Qabc.QabcGrammar.SkipWhitespace(Irony.Parsing.ISourceStream)">
+            <summary>Whitespace is part of this grammar, so we override the routine that skips it.</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Qabc.QabcGrammar.GetContext(Irony.Parsing.LanguageData)">
+            <summary>Provide MyGrammar with appropriate AstContext.</summary>
+            <param name="language"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PGSoftwareSolutions.Qabc.TypedNonTerminal`1">
+            <summary>Invoke <c>TypedNonTerminal&lt;TAstContext,TAstNode&gt;</c> against <c>QabcAstContext</c>.</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Qabc.QabcIronyParser">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Qabc.QabcIronyParser.Instance">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Qabc.QabcIronyParser.#ctor">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Qabc.QabcIronyParser.Parse(System.IO.TextReader)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Qabc.QabcIronyParser.Parse(System.String)">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Qabc.QabcIronyParser.GCFirst">
+            <summary>Force Garbage Collection prior to parse attempt.</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Qabc.QabcIronyParser.Errors">
+            <summary>Collection of parsing errors.</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Qabc.QabcKey.#ctor(PGSoftwareSolutions.Qabc.HighlandPipesKey)">
+            <summary>
+            
+            </summary>
+            <param name="baseNote">Valid values are an upper case character between A and G</param>
+            <param name="accidental">Valid values are '#', 'b' and ' '</param>
+            <param name="mode">Mode must be exactly 'm'; or its first three characters must be one of min, maj,
+            Lyd, Ion, Mix, Dor, Aeo, Phr, or Loc. The case of the string is ignored.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="T:PGSoftwareSolutions.Music.IMusicParser`1">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.IMusicParser`1.Parse(System.String)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.IMusicParser`1.Parse(System.IO.TextReader)">
+            <summary>TODO</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Music.NoteType">
+            <summary>TODO</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.NoteType.Longa">
+            <summary>TODO</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.NoteType.Breve">
+            <summary>TODO</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.NoteType.SemiBreve">
+            <summary>TODO</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.NoteType.Minim">
+            <summary>TODO</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.NoteType.Crotchet">
+            <summary>TODO</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.NoteType.Quaver">
+            <summary>TODO</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.NoteType.SemiQuaver">
+            <summary>TODO</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.NoteType.DemiSemiQuaver">
+            <summary>TODO</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.NoteType.HemiDemiSemiQuaver">
+            <summary>TODO</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Music.NoteTypeExtensions">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.NoteTypeExtensions.GetNoteType(PGSoftwareSolutions.Music.NoteType,System.Int16)">
+            <summary>TODO</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Music.IPitch">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.IPitch.PianoKey">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.IPitch.NoteLetter">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.IPitch.SharpFlat">
+            <summary>TODO</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Music.Style">
+            <summary>Play styles</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.Style.L">
+            <summary>Legato</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.Style.N">
+            <summary>Normal</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.Style.S">
+            <summary>Staccato</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Music.SharpFlat">
+            <summary>TODO</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.SharpFlat.FlatFlat">
+            <summary>TODO</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.SharpFlat.Flat">
+            <summary>TODO</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.SharpFlat.Natural">
+            <summary>TODO</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.SharpFlat.Sharp">
+            <summary>TODO</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.SharpFlat.SharpSharp">
+            <summary>TODO</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Music.OctaveShift">
+            <summary>TODO</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.OctaveShift.Down">
+            <summary>TODO</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Music.OctaveShift.Up">
+            <summary>TODO</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Music.EnumExtensions">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.EnumExtensions.Length(PGSoftwareSolutions.Music.Style,System.Double)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.EnumExtensions.AsString(PGSoftwareSolutions.Music.Style)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.EnumExtensions.Parse(PGSoftwareSolutions.Music.SharpFlat,System.String)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.EnumExtensions.FromString(PGSoftwareSolutions.Music.SharpFlat,System.String)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.EnumExtensions.AsString(PGSoftwareSolutions.Music.SharpFlat)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.EnumExtensions.FromString(PGSoftwareSolutions.Music.OctaveShift,System.String)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.EnumExtensions.AsString(PGSoftwareSolutions.Music.OctaveShift)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.EnumExtensions.Parse(PGSoftwareSolutions.Music.NoteLetter,System.String)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.EnumExtensions.FCGDAEB(PGSoftwareSolutions.Music.NoteLetter)">
+            <summary>
+            Returns the index for the base note according to:
+            <b>F</b>ather <b>C</b>harles <b>G</b>oes <b>D</b>own <b>A</b>nd <b>E</b>nds <B>B</B>attle.
+            </summary>
+            <param name="baseNote"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.EnumExtensions.SemitonesFromC(PGSoftwareSolutions.Music.NoteLetter)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.EnumExtensions.NoteIndex(PGSoftwareSolutions.Music.NoteLetter)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.EnumExtensions.AsString(PGSoftwareSolutions.Music.Mode)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.EnumExtensions.BaseNote(PGSoftwareSolutions.Music.Mode)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.EnumExtensions.Octave(PGSoftwareSolutions.Music.PianoKey)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.EnumExtensions.Letter(PGSoftwareSolutions.Music.PianoKey,System.Int32)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.EnumExtensions.Accidental(PGSoftwareSolutions.Music.PianoKey)">
+            <summary>TODO</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Music.INoteLength">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.INoteLength.Type">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.INoteLength.Numerator">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.INoteLength.Denominator">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.INoteLength.Length">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.INoteLength.DotCount">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.INoteLength.Time(System.Int16)">
+            <summary>TODO</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Music.INote">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.INote.Length">
+            <summary> Beat-length, or note value, as fraction/multiple of 1 whole note (semi-breve). </summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.INote.Duration">
+            <summary> Seconds that note is held. </summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.INote.LengthSeconds">
+            <summary> Seconds before start of next note. </summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.INote.Frequency">
+            <summary>Hertz (Hz). </summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.INote.Energy">
+            <summary> In decibels (dB) from -9 to 9 above or below the default of 0. </summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.INote.PianoKey">
+            <summary> Grand-piano equivalent, from 1 (A_0) to 88 (C_8). </summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.INote.NoteLetter">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.INote.SharpFlat">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.INote.Style">
+            <summary> Staccato, Normal, or Legato </summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Music.NoteLength">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.NoteLength.Type">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.NoteLength.Numerator">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.NoteLength.Denominator">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.NoteLength.Length">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.NoteLength.DotCount">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.NoteLength.#ctor(System.Int16)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.NoteLength.#ctor(System.Int16,System.Int16)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.NoteLength.#ctor(PGSoftwareSolutions.Music.NoteLength,System.Int16)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.NoteLength.Time(System.Int16)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.NoteLength.op_Implicit(System.Int16)~PGSoftwareSolutions.Music.NoteLength">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.NoteLength.op_Implicit(System.Byte)~PGSoftwareSolutions.Music.NoteLength">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.NoteLength.ToString">
+            <summary>TODO</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Music.Note">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Note.Length">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Note.Duration">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Note.LengthSeconds">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Note.Frequency">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Note.Energy">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Note.PianoKey">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Note.NoteLetter">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Note.SharpFlat">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Note.Style">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.Note.#ctor(PGSoftwareSolutions.Music.NoteLetter,PGSoftwareSolutions.Music.PianoKey,PGSoftwareSolutions.Music.SharpFlat,PGSoftwareSolutions.Music.Style,System.Int16,PGSoftwareSolutions.Music.NoteLength,System.Int16)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.Note.KeyNumber(PGSoftwareSolutions.Music.NoteLetter,System.Int16,PGSoftwareSolutions.Music.SharpFlat)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.Note.ToString">
+            <inherited/>
+        </member>
+        <member name="T:PGSoftwareSolutions.Music.Notes">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.Notes.Init">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Notes.Tempo">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Notes.GetNoteLength">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Notes.Length">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Notes.Style">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Notes.SetStyle">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Notes.Octave">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Notes.Shift">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.Notes.KeyNumber(PGSoftwareSolutions.Music.NoteLetter,PGSoftwareSolutions.Music.SharpFlat)">
+            <summary>TODO</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Music.Notes2">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.Notes2.Init">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.Notes2.#ctor(PGSoftwareSolutions.Music.Notes2)">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Notes2.GetNoteLength">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Notes2.Length">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Notes2.Octave">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Notes2.ShiftOctave">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Notes2.Style">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Notes2.SetStyle">
+            <summary>TODO</summary>
+        </member>
+        <member name="P:PGSoftwareSolutions.Music.Notes2.Tempo">
+            <summary>TODO</summary>
+        </member>
+        <member name="T:PGSoftwareSolutions.Music.Tune`1">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.Tune`1.op_Addition(PGSoftwareSolutions.Music.Tune{`0},`0)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutions.Music.Tune`1.op_Subtraction(PGSoftwareSolutions.Music.Tune{`0},`0)">
+            <summary>TODO</summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_ACCEPTFILES">
+            <summary>
+            Specifies that a window created with this style accepts drag-drop files.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_APPWINDOW">
+            <summary>
+            Forces a top-level window onto the taskbar when the window is visible.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_CLIENTEDGE">
+            <summary>
+            Specifies that a window has a border with a sunken edge.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_COMPOSITED">
+            <summary>
+            Windows XP: Paints all descendants of a window in bottom-to-top painting order using double-buffering. For more information, see Remarks. This cannot be used if the window has a class style of either CS_OWNDC or CS_CLASSDC. 
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_CONTEXTHELP">
+            <summary>
+            Includes a question mark in the title bar of the window. When the user clicks the question mark, the cursor changes to a question mark with a pointer. If the user then clicks a child window, the child receives a WM_HELP message. The child window should pass the message to the parent window procedure, which should call the WinHelp function using the HELP_WM_HELP command. The Help application displays a pop-up window that typically contains help for the child window.
+            WS_EX_CONTEXTHELP cannot be used with the WS_MAXIMIZEBOX or WS_MINIMIZEBOX styles.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_CONTROLPARENT">
+            <summary>
+            The window itself contains child windows that should take part in dialog box navigation. If this style is specified, the dialog manager recurses into children of this window when performing navigation operations such as handling the TAB key, an arrow key, or a keyboard mnemonic.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_DLGMODALFRAME">
+            <summary>
+            Creates a window that has a double border; the window can, optionally, be created with a title bar by specifying the WS_CAPTION style in the dwStyle parameter.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_LAYERED">
+            <summary>
+            Windows 2000/XP: Creates a layered window. Note that this cannot be used for child windows. Also, this cannot be used if the window has a class style of either CS_OWNDC or CS_CLASSDC. 
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_LAYOUTRTL">
+            <summary>
+            Arabic and Hebrew versions of Windows 98/Me, Windows 2000/XP: Creates a window whose horizontal origin is on the right edge. Increasing horizontal values advance to the left. 
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_LEFT">
+            <summary>
+            Creates a window that has generic left-aligned properties. This is the default.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_LEFTSCROLLBAR">
+            <summary>
+            If the shell language is Hebrew, Arabic, or another language that supports reading order alignment, the vertical scroll bar (if present) is to the left of the client area. For other languages, the style is ignored.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_LTRREADING">
+            <summary>
+            The window text is displayed using left-to-right reading-order properties. This is the default.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_MDICHILD">
+            <summary>
+            Creates a multiple-document interface (MDI) child window.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_NOACTIVATE">
+            <summary>
+            Windows 2000/XP: A top-level window created with this style does not become the foreground window when the user clicks it. The system does not bring this window to the foreground when the user minimizes or closes the foreground window. 
+            To activate the window, use the SetActiveWindow or SetForegroundWindow function.
+            The window does not appear on the taskbar by default. To force the window to appear on the taskbar, use the WS_EX_APPWINDOW style.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_NOINHERITLAYOUT">
+            <summary>
+            Windows 2000/XP: A window created with this style does not pass its window layout to its child windows.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_NOPARENTNOTIFY">
+            <summary>
+            Specifies that a child window created with this style does not send the WM_PARENTNOTIFY message to its parent window when it is created or destroyed.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_OVERLAPPEDWINDOW">
+            <summary>
+            Combines the WS_EX_CLIENTEDGE and WS_EX_WINDOWEDGE styles.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_PALETTEWINDOW">
+            <summary>
+            Combines the WS_EX_WINDOWEDGE, WS_EX_TOOLWINDOW, and WS_EX_TOPMOST styles.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_RIGHT">
+            <summary>
+            The window has generic "right-aligned" properties. This depends on the window class. This style has an effect only if the shell language is Hebrew, Arabic, or another language that supports reading-order alignment; otherwise, the style is ignored.
+            Using the WS_EX_RIGHT style for static or edit controls has the same effect as using the SS_RIGHT or ES_RIGHT style, respectively. Using this style with button controls has the same effect as using BS_RIGHT and BS_RIGHTBUTTON styles.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_RIGHTSCROLLBAR">
+            <summary>
+            Vertical scroll bar (if present) is to the right of the client area. This is the default.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_RTLREADING">
+            <summary>
+            If the shell language is Hebrew, Arabic, or another language that supports reading-order alignment, the window text is displayed using right-to-left reading-order properties. For other languages, the style is ignored.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_STATICEDGE">
+            <summary>
+            Creates a window with a three-dimensional border style intended to be used for items that do not accept user input.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_TOOLWINDOW">
+            <summary>
+            Creates a tool window; that is, a window intended to be used as a floating toolbar. A tool window has a title bar that is shorter than a normal title bar, and the window title is drawn using a smaller font. A tool window does not appear in the taskbar or in the dialog that appears when the user presses ALT+TAB. If a tool window has a system menu, its icon is not displayed on the title bar. However, you can display the system menu by right-clicking or by typing ALT+SPACE. 
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_TOPMOST">
+            <summary>
+            Specifies that a window created with this style should be placed above all non-topmost windows and should stay above them, even when the window is deactivated. To add or remove this style, use the SetWindowPos function.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_TRANSPARENT">
+            <summary>
+            Specifies that a window created with this style should not be painted until siblings beneath the window (that were created by the same thread) have been painted. The window appears transparent because the bits of underlying sibling windows have already been painted.
+            To achieve transparency without these restrictions, use the SetWindowRgn function.
+            </summary>
+        </member>
+        <member name="F:PGSoftwareSolutions.Util.WindowStylesEx.WS_EX_WINDOWEDGE">
+            <summary>
+            Specifies that a window has a border with a raised edge.
+            </summary>
+        </member>
+        <member name="T:System.Windows.Forms.MouseKeys">
+            <summary>Enumeration for buttons and modifiers in Windows Mouse messages.</summary>
+        </member>
+        <member name="F:System.Windows.Forms.MouseKeys.None">
+            <summary>None.</summary>
+        </member>
+        <member name="F:System.Windows.Forms.MouseKeys.LButton">
+            <summary>Left mouse button.</summary>
+        </member>
+        <member name="F:System.Windows.Forms.MouseKeys.RButton">
+            <summary>Right mouse button.</summary>
+        </member>
+        <member name="F:System.Windows.Forms.MouseKeys.Shift">
+            <summary>Shift key.</summary>
+        </member>
+        <member name="F:System.Windows.Forms.MouseKeys.Control">
+            <summary>Control key.</summary>
+        </member>
+        <member name="F:System.Windows.Forms.MouseKeys.MButton">
+            <summary>Middle mouse button.</summary>
+        </member>
+        <member name="F:System.Windows.Forms.MouseKeys.XButton1">
+            <summary>First mouse X button.</summary>
+        </member>
+        <member name="F:System.Windows.Forms.MouseKeys.XButton2">
+            <summary>Second mouse X button.</summary>
+        </member>
+        <member name="T:System.Windows.Forms.MouseInput">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:System.Windows.Forms.MouseInput.GetKeyStateWParam(System.IntPtr)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:System.Windows.Forms.MouseInput.WheelDelta(System.IntPtr)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:System.Windows.Forms.MouseInput.WParam(System.Int16,System.Windows.Forms.MouseKeys)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:System.Windows.Forms.MouseInput.GetPointLParam(System.IntPtr)">
+            <summary> Determine (sign-extended for multiple monitors) screen coordinates at m.LParam.</summary>
+            <param name="lParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.Windows.Forms.MouseInput.LParam(System.Drawing.Point)">
+            <summary>TODO</summary>
+        </member>
+        <member name="T:PGSoftwareSolutionsInc.Util.EventExtensions">
+            <summary>
+            Generic thread-safe event-raisers
+            </summary>
+            <see href="http://blog.quantumbitdesigns.com/tag/events/"/>
+        </member>
+        <member name="M:PGSoftwareSolutionsInc.Util.EventExtensions.RaiseEvent``1(System.EventHandler{``0},System.Object,``0)">
+            <summary>Generic thread-safe event-raiser.</summary>
+            <typeparam name="T"></typeparam>
+            <param name="eventHandler"></param>
+            <param name="sender"></param>
+            <param name="e"></param>
+            <see href="http://blog.quantumbitdesigns.com/tag/events/"/>
+        </member>
+        <member name="M:PGSoftwareSolutionsInc.Util.EventExtensions.RaiseEvent(System.EventHandler,System.Object,System.EventArgs)">
+            <summary>Thread-safe event-raiser.</summary>
+            <param name="eventHandler"></param>
+            <param name="sender"></param>
+            <param name="e"></param>
+            <see href="http://blog.quantumbitdesigns.com/tag/events/"/>
+        </member>
+        <member name="T:PGSoftwareSolutionsInc.Util.Utils">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutionsInc.Util.Utils.GetExtensionMethods(System.Reflection.Assembly,System.Type)">
+            <summary>Returns all the extension methods for a type available to a specified assembly.</summary>
+            <param name="assembly"></param>
+            <param name="extType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PGSoftwareSolutionsInc.Util.Utils.SetterFromGetter``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+             Construct a 'setter' for the specified class, from the provided 'getter'.
+            </summary>
+            <typeparam name="TClass"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="getter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PGSoftwareSolutionsInc.Util.Utils.Minutes(System.Int32)">
+            <summary>TODO</summary>
+        </member>
+        <member name="M:PGSoftwareSolutionsInc.Util.Utils.Ago(System.TimeSpan)">
+            <summary>TODO</summary>
+        </member>
+    </members>
+</doc>

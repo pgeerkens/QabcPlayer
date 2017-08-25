@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Highlighter", "Highlighter\Highlighter.csproj", "{A1FCD5E5-7224-45FF-99DE-9A3FDE0C87BF}"
 EndProject
@@ -27,6 +27,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidiPlayer", "MidiPlayer\MidiPlayer.csproj", "{175A3A69-9113-4404-B842-3711C57948F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidiPlayerTest", "MidiPlayerTest\MidiPlayerTest.csproj", "{659F597A-3161-46CD-A0A8-B64266BD353E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QabcPlayerViewModel", "QabcPlayerViewModel2\QabcPlayerViewModel.csproj", "{0FB85868-B30D-4F16-8FB4-032F12BF8877}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,8 +66,15 @@ Global
 		{659F597A-3161-46CD-A0A8-B64266BD353E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{659F597A-3161-46CD-A0A8-B64266BD353E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{659F597A-3161-46CD-A0A8-B64266BD353E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FB85868-B30D-4F16-8FB4-032F12BF8877}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FB85868-B30D-4F16-8FB4-032F12BF8877}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FB85868-B30D-4F16-8FB4-032F12BF8877}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FB85868-B30D-4F16-8FB4-032F12BF8877}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E7239C81-9638-4077-B15F-7BFCC733151B}
 	EndGlobalSection
 EndGlobal
