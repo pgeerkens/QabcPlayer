@@ -44,7 +44,7 @@ namespace PGSoftwareSolutions.QabcPlayer {
 			PBScore.HighQuality			 = true;
             PBScore.ScoreHighlighter	 = pbHighlight;
             
-            txtMusicString.ScoreProvider = //PBScore;
+            txtMusicString.ScoreProvider =
             pbHighlight.ScoreProvider    = PBScore;
         }
 
@@ -63,7 +63,7 @@ namespace PGSoftwareSolutions.QabcPlayer {
        
         #region MIDI Player Control
         private QabcIronyParser _qabcParser => QabcIronyParser.Instance;
-		private IAsyncPlayer    _midiPlayer;
+		private IPlayer<INote>  _midiPlayer;
 
 		private void SetEnablings(bool PlayEnabled) {
 			txtMusicString.Enabled	= PlayEnabled;
@@ -81,7 +81,7 @@ namespace PGSoftwareSolutions.QabcPlayer {
 
 		private void ButtonPlay_Click(object sender, EventArgs e) {
 			if (!buttonPlay.Checked) {
-				(_midiPlayer as ICancelablePlayer)?.Cancel();
+				_midiPlayer?.Cancel();
 				buttonPause.Checked = false;
 				SetEnablings(true);	// Aborted, so enable interface
 			} else if (PBScore.Tune == null  ||  PBScore.Tune.Count == 0) 
@@ -93,6 +93,8 @@ namespace PGSoftwareSolutions.QabcPlayer {
                     _midiPlayer.NextNote      += OnNextNote;
                     _midiPlayer.PlayCompleted += PlayCompleted;
 					_midiPlayer.PlayAsync(PBScore.Tune);
+
+                    buttonPause.Enabled = _midiPlayer.AsPausablePlayer != null;
 				} catch (Exception ex) {
                     var message = ex.Message + Environment.NewLine + Environment.NewLine + ex.StackTrace;
                     MessageBox.Show(message, ex.GetType().Name, MessageBoxButtons.OK, MessageBoxIcon.Stop);
@@ -102,20 +104,21 @@ namespace PGSoftwareSolutions.QabcPlayer {
 		}
 
 		private void PlayCompleted(object sender, PlayCompletedEventArgs e) {
-			if(_midiPlayer!= null) _midiPlayer.PlayCompleted -= PlayCompleted;
 			if (InvokeRequired)
-				Invoke( ((Action) (()=>{
-					SetEnablings(true);
-					BouncingBall(0,1);
-				})));
-			else {
-				SetEnablings(true);
-				BouncingBall(0,1);
-			}
+				Invoke( (Action) (()=> PlayCompleted()));
+			else
+				PlayCompleted();
 		}
+        private void PlayCompleted() {
+			SetEnablings(true);
+			BouncingBall(0,1);
+            _midiPlayer.NextNote      -= OnNextNote;
+            _midiPlayer.PlayCompleted -= PlayCompleted;
+            _midiPlayer = null;
+        }
 
 		private void ButtonPause_CheckedChanged(object sender, EventArgs e) {
-            var player = _midiPlayer as IPausablePlayer;
+            var player = _midiPlayer.AsPausablePlayer;
 
             if (player != null) {
                 player.PauseResume();
@@ -160,7 +163,7 @@ namespace PGSoftwareSolutions.QabcPlayer {
         }
 
         RadioButton[]	_radioButtonSpecies = new RadioButton[8];
-		void InitRadioButtonSpecies(IList<IInstrument> species) {
+		void InitRadioButtonSpecies(IReadOnlyList<IInstrument> species) {
 			_radioButtonSpecies[0]      = radioButtonSpecies0;
             for (int i=1; i<8; i++) {
 				_radioButtonSpecies[i]			= new RadioButton();
@@ -176,7 +179,7 @@ namespace PGSoftwareSolutions.QabcPlayer {
 			}
             SetRadioButtonSpecies(species);
         }
-        void SetRadioButtonSpecies(IList<IInstrument> species) {
+        void SetRadioButtonSpecies(IReadOnlyList<IInstrument> species) {
             for (int i = 0; i < 8; i++) {
                 _radioButtonSpecies[i].Tag  = species[i];
                 _radioButtonSpecies[i].Text = species[i].Name;
@@ -198,7 +201,7 @@ namespace PGSoftwareSolutions.QabcPlayer {
 		private void RadioButtonSpecies_Click(object sender, EventArgs e) {
             var species = ((IInstrument)((RadioButton)sender).Tag);
             panelMidiSpecies.Tag = species;
-            (_midiPlayer as IInstrumentSettableMidiPlayer)?.SetInstrument(species);
+            _midiPlayer?.SetInstrument(species);
 		}
 		#endregion MIDI Instruments
 
@@ -216,9 +219,11 @@ namespace PGSoftwareSolutions.QabcPlayer {
 		}
 		private void BouncingBall(int position, int length) {
             var noteRectangle = PBScore.ShowScorePosition(position);
-            PBScore.Invalidate(noteRectangle);
+            PBScore.Invalidate();
 			txtMusicString.ShowSourcePosition(position,length);
 			pbHighlight.InvalidateEx(noteRectangle);
+
+            Console.WriteLine($"position: {position}; length: {length}; noteRectangle:{noteRectangle}");
 		}
 		#endregion Bouncing Ball
 
@@ -344,7 +349,7 @@ namespace PGSoftwareSolutions.QabcPlayer {
 
                 _mediaPlayer.settings.autoStart = true;
                 //	mediaPlayer.Visible	            = true;
-                _mediaPlayer.URL                 = _urlPrefix + sTmpFilename;
+                _mediaPlayer.URL                    = _urlPrefix + sTmpFilename;
                 _mediaPlayer.Tag		            = sTmpFilename;	// to aid in clean-up later
                 _mediaPlayer.Ctlcontrols.play();
 			}
@@ -465,7 +470,7 @@ namespace PGSoftwareSolutions.QabcPlayer {
 			Application.Exit();
 		}
 		private void PlayMidiForm_FormClosed(object sender, FormClosedEventArgs e) {
-            (_midiPlayer as ICancelablePlayer)?.Cancel();
+            _midiPlayer?.Cancel();
             _midiPlayer = null;
         }
         #endregion Shutdown

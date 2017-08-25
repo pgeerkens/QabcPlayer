@@ -11,7 +11,7 @@ namespace PGSoftwareSolutions.Music {
     internal class MidiGenus : IInstrumentGenus {
         public short              Index   { get { return _index;  } } readonly short _index;
         public string             Name    { get { return _name;   } } readonly string _name;
-        public IList<IInstrument> Species { get { return _species;} } readonly IList<IInstrument> _species;
+        public IReadOnlyList<IInstrument> Species { get { return _species;} } readonly IReadOnlyList<IInstrument> _species;
 
         public MidiGenus(short index, string name) {
             _index   = index;

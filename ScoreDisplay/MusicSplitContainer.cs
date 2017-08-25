@@ -100,9 +100,9 @@ namespace PGSoftwareSolutions.ScoreDisplay {
 					if (scroll) {
 						Panel2.AutoScrollPosition = new System.Drawing.Point(0, (int) (
 							( Panel2.AutoScrollMinSize.Height / _score.Count )
-							* ( (float)scoreLine.Index - 1.5F
-							+ ( (float)(          position        - scoreLine[0].Position)
-							  / (float)(scoreLine.MaxNotePosition - scoreLine[0].Position) )
+							* ( scoreLine.Index - 1.5F
+							+ ( (          position        - scoreLine[0].Position)
+							  / (scoreLine.MaxNotePosition - scoreLine[0].Position) )
 							)
 						));
 					}
@@ -150,8 +150,6 @@ namespace PGSoftwareSolutions.ScoreDisplay {
 		} Tune<INote> _tuneNote; List<IAwareNote> _tune;
         /// <summary>TODO</summary>
         public new void          Invalidate(){ Panel2.Invalidate(); }
-        /// <summary>TODO</summary>
-        public new void          Invalidate(Rectangle r){ Panel2.Invalidate(r); }
         /// <summary>TODO</summary>
         public IScoreHighlighter ScoreHighlighter	{ get; set; }
 		#endregion

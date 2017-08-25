@@ -57,11 +57,11 @@ namespace PGSoftwareSolutions.Music {
 		/// <return>double: Fraction of 1.0D to be applied to the note's amplitude</return>
 		Expression<Func<int, double>>								HarmonicDecay();
         /// <summary>TODO</summary>
-		Expression<Func<double,double>>							FrequencyResponse();
+		Expression<Func<double,double>>							    FrequencyResponse();
         /// <summary>TODO</summary>
 		int SampleRate						{ get; }
         /// <summary>TODO</summary>
-		int MaxDegreeeOfParallelism	{ get; }
+		int MaxDegreeeOfParallelism	        { get; }
 	}
 
     /// <summary>TODO</summary>

@@ -8,24 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Midi;
 
 using PGSoftwareSolutions.Qabc;
 
 namespace PGSoftwareSolutions.Music {
-    using NextNoteEvent      = EventHandler<NextNoteEventArgs>;
-    using PlayCompletedEvent = EventHandler<PlayCompletedEventArgs>;
-
     // The static methods, collected together.
     public partial class MidiPlayer {
-        /// <summary>TODO</summary>
-        public static IAsyncPlayer New()                                            => New(_defaultInstrument);
-        /// <summary>TODO</summary>
-        public static IAsyncPlayer New(IInstrument instrument)                      => New(instrument, _defaultDevice);
-        /// <summary>TODO</summary>
-        public static IAsyncPlayer New(IInstrument instrument, OutputDevice device) => New(instrument, device, _defaultChannel);
-        /// <summary>TODO</summary>
-        public static IAsyncPlayer New(IInstrument instrument, OutputDevice device, Channel channel) =>
+        /// <summary>Returns a new instance of {MidiPlayer}.</summary>
+        public static IPlayer<INote> New()                                            => New(_defaultInstrument);
+        /// <summary>Returns a new instance of {MidiPlayer}.</summary>
+        public static IPlayer<INote> New(IInstrument instrument)                      => New(instrument, _defaultDevice);
+        /// <summary>Returns a new instance of {MidiPlayer}.</summary>
+        public static IPlayer<INote> New(IInstrument instrument, OutputDevice device) => New(instrument, device, _defaultChannel);
+        /// <summary>Returns a new instance of {MidiPlayer}.</summary>
+        public static IPlayer<INote> New(IInstrument instrument, OutputDevice device, Channel channel) =>
             new MidiPlayer(instrument.Instrument, device, channel);
 
         readonly static OutputDevice _defaultDevice     = OutputDevice.InstalledDevices[0];
@@ -52,73 +50,83 @@ namespace PGSoftwareSolutions.Music {
     }
 
     /// <summary>TODO</summary>
-    [CLSCompliant(false)]
-    public sealed partial class MidiPlayer : IDisposable, IAsyncPlayer,
-        IInstrumentSettableMidiPlayer, IPausablePlayer, ICancelablePlayer {
+    [CLSCompliant(true)]
+    public sealed partial class MidiPlayer : IPlayer<INote>, IDisposable, IPausablePlayer {
         private MidiPlayer(Instrument instrument, OutputDevice device, Channel channel) {
             Device     = device;
             Channel    = channel;
             Instrument = instrument;
         }
 
-        /// <summary>TODO</summary>
-        public OutputDevice Device      { get; }
-        /// <summary>TODO</summary>
-		public Channel      Channel     { get; }
-        /// <summary>TODO</summary>
-		public Instrument   Instrument  { get; private set; }
+        ///<inheritdoc/>
+        public IPausablePlayer                  AsPausablePlayer                => this;
+
+		private Channel      Channel    { get; }
+        private Clock        Clock      { get; set; }
+        private OutputDevice Device     { get; set; }
+		private Instrument   Instrument { get; set; }
 
         ///<inheritdoc/>
-		public void PlayAsync<TNote>(Tune<TNote> tune) where TNote : INote {
-            if (_isDisposed) throw new ObjectDisposedException(nameof(MidiPlayer));
+        ///<exception cref="ObjectDisposedException">ObjectDisposedException</exception>
+        ///<exception cref="ArgumentNullException">ArgumentNullException</exception>
+		public void PlayAsync(Tune<INote> tune) {
+            if (IsRunning) throw new InvalidOperationException("Player already running!");
             if (tune == null) throw new ArgumentNullException(nameof(tune));
 
             Device.Open();
             Device.SendPitchBend(Channel, 8192);        // 8192 = Centred
 
-            _clock = new Clock(120F);
+            Clock = new Clock(120F);
             new ProgramChangeMessage(Device, Channel, Instrument, 0).SendNow();
 
             float time = 0.100F;
             foreach (INote note in tune) {
                 var ni = new NoteInfo(note);
                 if (note is IAwareNote)
-                    _clock.Schedule(new HighlightMessage(OnNextNote, time, note as IAwareNote));
+                    Clock.Schedule(new HighlightMessage(OnNextNote, time, note as IAwareNote));
                 if (note.PianoKey != 0) {
-                    _clock.Schedule(new NoteOnOffMessage(Device, Channel, ni.Pitch, ni.Velocity, time,
-                            _clock, ni.Duration));
+                    Clock.Schedule(new NoteOnOffMessage(Device, Channel, ni.Pitch, ni.Velocity, time, Clock, ni.Duration));
                 }
                 time += ni.Length;
             }
-            _clock.Schedule(new CallbackMessage(PlayCompletedCallback, time));
-            _clock.Start();
+            Clock.Schedule(new CallbackMessage(PlayCompletedCallback, time));
+            Clock.Start();
         }
         ///<inheritdoc/>
-		public void PauseResume() => AsyncAction(IsRunning ? (Action)_clock.Stop : (Action)_clock.Start);
+        ///<exception cref="ObjectDisposedException">ObjectDisposedException</exception>
+		public void PauseResume() => AsyncAction(IsRunning ? (Action)Clock.Stop : Clock.Start);
 
-        ///<inheritdoc/>
+        ///<summary>TODO</summary>
+        ///<exception cref="ObjectDisposedException">ObjectDisposedException</exception>
         public bool IsRunning {
             get { if (_isDisposed) throw new ObjectDisposedException(nameof(MidiPlayer));
-                  return _clock?.IsRunning ?? false;
+                  return Clock?.IsRunning ?? false;
                 }
         }
-        ///<inheritdoc/>
+        /// <summary>Asynchronously stops, and disposes, this instance.</summary>
 		public void Cancel() => AsyncAction(ShutDown);
-        ///<inheritdoc/>
+        /// <summary>Dynamically changes the current instrument for this instance.</summary>
+        ///<exception cref="ObjectDisposedException">ObjectDisposedException</exception>
         public void SetInstrument(IInstrument instrument) {
-            Instrument = instrument.Instrument; 
-            if (Device.IsOpen) new ProgramChangeMessage(Device, Channel, Instrument, 0).SendNow();
+            if (IsRunning) {
+                Instrument = instrument.Instrument; 
+                if (Device.IsOpen) new ProgramChangeMessage(Device, Channel, Instrument, 0).SendNow();
+            }
         }
 
         ///<inheritdoc/>
-		public event PlayCompletedEvent PlayCompleted;
+		public event EventHandler<PlayCompletedEventArgs> PlayCompleted;
         ///<inheritdoc/>
-        public event NextNoteEvent NextNote;
+        public event EventHandler<NextNoteEventArgs>      NextNote;
 
-        private void AsyncAction(Action action)         => action.BeginInvoke((ar) => { action.EndInvoke(ar); }, null);
+        /// <summary>Runs the supplied action asynchronously.</summary>
+        /// <param name="action">The "action" to be performed.</param>
+        /// <remarks> <a href="https://stackoverflow.com/questions/10340871/difference-between-delegate-begininvoke-and-using-threadpool-threads-in-c-sharp">More efficient than using Begin-/End-Invoke</a>/></remarks>
+        private void AsyncAction(Action action)         => ThreadPool.QueueUserWorkItem(state => action()); 
 
         private void PlayCompletedCallback(float time)  => Cancel();
 
+        /// <summary>Synchronously stops, and disposes, this instance.</summary>
         private void ShutDown() {
             OnPlayCompleted(new PlayCompletedEventArgs(true));
             Dispose();
@@ -127,24 +135,24 @@ namespace PGSoftwareSolutions.Music {
 
         private void OnNextNote(NextNoteEventArgs e)            => NextNote?.Invoke(this, e);
 
-        private Clock _clock;
-
         #region Standard sealed IDisposable implementation - with finalizer
-        private bool _isDisposed = false;
         /// <inheritdoc/>
-        public void Dispose() => Dispose(false);
+        public void Dispose() { Dispose(true); GC.SuppressFinalize(this); }
+        private bool _isDisposed = false;
         private void Dispose(bool isDisposing) {
             if (! _isDisposed) {
-                if (! isDisposing) {
-                    try {if (_clock?.IsRunning??false) { _clock.Stop(); _clock.Reset(); } } catch (Exception) { ; }
-                    try {if (Device.IsOpen) Device.Close(); } catch (Exception) { ; }
+                if (isDisposing) {  // release other disposable objects (and event-handlers)
+                    NextNote      = null;
+                    PlayCompleted = null;
                 }
+                try {if (Clock?.IsRunning ?? false) { Clock.Stop(); Clock.Reset(); } } catch (Exception) { ; } finally { Clock  = null;}
+                try {if (Device?.IsOpen ?? false) { Device.Close(); } } catch (Exception) { ; } finally { Device  = null;}
             }
             _isDisposed = true;
         }
 
         /// <summary>Finalizer - TODO - checck if needed.</summary>
-        ~MidiPlayer() { Dispose(true); }
+        ~MidiPlayer() { Dispose(false); }
         #endregion
     }
 }
